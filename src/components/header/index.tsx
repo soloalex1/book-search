@@ -4,7 +4,7 @@ import Search from "../search";
 
 import useDebounce from "../../hooks/useDebounce";
 
-import { getVolumeDetails } from "../../api";
+import { getVolumes } from "../../api";
 
 import { Container, Content, ContentSearch, ContentUser } from "./styles";
 
@@ -18,8 +18,8 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    if (debounceTerm) getVolumeDetails(debounceTerm);
-  }, [debounceTerm, getVolumeDetails]);
+    if (debounceTerm) getVolumes(debounceTerm);
+  }, [debounceTerm, getVolumes]);
 
   return (
     <Container>
