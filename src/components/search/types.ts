@@ -1,3 +1,6 @@
+import { ChangeEvent } from "react";
+
 export type SearchProps = {
-    value: string
-}
+  value: string;
+  onChange(e: ChangeEvent<HTMLInputElement>): void;
+};
