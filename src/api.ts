@@ -7,37 +7,31 @@ export const getVolumes = async (
   startIndex: number = 0,
   maxResults: number = 10
 ): Promise<VolumeData[] | undefined> => {
-  try {
-    const params = new URLSearchParams({
-      q: query,
-      startIndex: startIndex.toString(),
-      maxResults: maxResults.toString(),
-    });
+  const params = new URLSearchParams({
+    q: query,
+    startIndex: startIndex.toString(),
+    maxResults: maxResults.toString(),
+  });
 
-    const response = await fetch(`${ROOT_URL}/volumes?${params.toString()}`);
+  const response = await fetch(`${ROOT_URL}/volumes?${params.toString()}`);
 
-    if (response.ok) {
-      return await response.json();
-    }
-  } catch (error) {
-    throw new Error(
-      "Ocorreu um erro na sua consulta. Tente novamente mais tarde. "
-    );
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    return Promise.reject(new Error(errorMessage));
   }
+
+  return await response.json();
 };
 
 export const getVolumeDetails = async (
   id: number
 ): Promise<VolumeData | undefined> => {
-  try {
-    const response = await fetch(`${ROOT_URL}/volumes/${id}`);
+  const response = await fetch(`${ROOT_URL}/volumes/${id}`);
 
-    if (response.ok) {
-      return await response.json();
-    }
-  } catch (error) {
-    throw new Error(
-      "Ocorreu um erro ao obter os dados do livro. Tente novamente mais tarde. "
-    );
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    return Promise.reject(new Error(errorMessage));
   }
+
+  return await response.json();
 };
