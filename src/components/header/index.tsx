@@ -11,7 +11,7 @@ import { Container, Content, ContentSearch, ContentUser } from "./styles";
 import useStore from "../../store";
 
 const Header: React.FC = () => {
-  const { suggestions, setSuggestions } = useStore((state) => state);
+  const { setSuggestions } = useStore((state) => state);
 
   const [term, setTerm] = useState("");
   const debounceTerm = useDebounce(term);
@@ -29,8 +29,6 @@ const Header: React.FC = () => {
       handleSearch(debounceTerm).then((data) => {
         if (data) setSuggestions(data);
       });
-
-      console.log(suggestions);
     }
   }, [debounceTerm, handleSearch]);
 

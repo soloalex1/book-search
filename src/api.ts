@@ -5,12 +5,17 @@ const ROOT_URL = "https://www.googleapis.com/books/v1";
 export const getVolumes = async (
   query: string,
   startIndex: number = 0,
-  maxResults: number = 10
+  maxResults: number = 10,
+  subjects: string[] = ["action"]
 ): Promise<VolumeData[] | undefined> => {
+  const queryString = subjects.length
+    ? `${query}+subject:${subjects.join("+")}`
+    : query;
+
   const params = new URLSearchParams({
-    q: query,
     startIndex: startIndex.toString(),
     maxResults: maxResults.toString(),
+    q: queryString,
   });
 
   const response = await fetch(`${ROOT_URL}/volumes?${params.toString()}`);
