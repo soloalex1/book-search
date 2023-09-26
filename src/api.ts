@@ -1,10 +1,12 @@
+import { VolumeData } from "./types";
+
 const ROOT_URL = "https://www.googleapis.com/books/v1";
 
 export const getVolumes = async (
   query: string,
   startIndex: number = 0,
   maxResults: number = 10
-): Promise<unknown[] | undefined> => {
+): Promise<VolumeData[] | undefined> => {
   try {
     const params = new URLSearchParams({
       q: query,
@@ -24,7 +26,9 @@ export const getVolumes = async (
   }
 };
 
-export const getVolumeDetails = async (id: number): Promise<unknown> => {
+export const getVolumeDetails = async (
+  id: number
+): Promise<VolumeData | undefined> => {
   try {
     const response = await fetch(`${ROOT_URL}/volumes/${id}`);
 
