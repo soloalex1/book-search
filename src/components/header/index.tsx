@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect, useCallback } from "react";
 
 import Search from "../search";
 
@@ -17,9 +17,13 @@ const Header: React.FC = () => {
     setTerm(e.target.value);
   };
 
+  const handleSearch = useCallback((query: string) => {
+    return getVolumes(query);
+  }, []);
+
   useEffect(() => {
-    if (debounceTerm) getVolumes(debounceTerm);
-  }, [debounceTerm, getVolumes]);
+    if (debounceTerm) handleSearch(debounceTerm);
+  }, [debounceTerm, handleSearch]);
 
   return (
     <Container>
