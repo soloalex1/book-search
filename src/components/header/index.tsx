@@ -1,13 +1,25 @@
-import React, { ChangeEvent, useState } from "react";
-import { Container, Content, ContentSearch, ContentUser } from "./styles";
+import React, { ChangeEvent, useState, useEffect } from "react";
+
 import Search from "../search";
+
+import useDebounce from "../../hooks/useDebounce";
+
+import { getVolumeDetails } from "../../api";
+
+import { Container, Content, ContentSearch, ContentUser } from "./styles";
 
 const Header: React.FC = () => {
   const [term, setTerm] = useState("");
 
+  const debounceTerm = useDebounce(term);
+
   const onChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };
+
+  useEffect(() => {
+    if (debounceTerm) getVolumeDetails(debounceTerm);
+  }, [debounceTerm, getVolumeDetails]);
 
   return (
     <Container>
