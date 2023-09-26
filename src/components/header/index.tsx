@@ -8,21 +8,30 @@ import { getVolumes } from "../../api";
 
 import { Container, Content, ContentSearch, ContentUser } from "./styles";
 
-const Header: React.FC = () => {
-  const [term, setTerm] = useState("");
+import useStore from "../../store";
 
+const Header: React.FC = () => {
+  const { suggestions, setSuggestions } = useStore((state) => state);
+
+  const [term, setTerm] = useState("");
   const debounceTerm = useDebounce(term);
 
   const onChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };
 
-  const handleSearch = useCallback((query: string) => {
-    return getVolumes(query);
+  const handleSearch = useCallback(async (query: string) => {
+    return await getVolumes(query);
   }, []);
 
   useEffect(() => {
-    if (debounceTerm) handleSearch(debounceTerm);
+    if (debounceTerm) {
+      handleSearch(debounceTerm).then((data) => {
+        if (data) setSuggestions(data);
+      });
+
+      console.log(suggestions);
+    }
   }, [debounceTerm, handleSearch]);
 
   return (
