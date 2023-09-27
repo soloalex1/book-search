@@ -1,15 +1,6 @@
 import React from "react";
 import Header from "../../components/header";
 import Filters from "../../components/filters";
-import {
-    Container,
-  Content,
-  ContentResults,
-  ContentResultsCategory,
-  ContentResultsCover,
-  ContentResultsTitle,
-  ContentResultsWrapper,
-} from "./styles";
 import Footer from "../../components/footer";
 import {
   footerAllrightsReserved,
@@ -17,36 +8,44 @@ import {
   privacyAndPolicy,
   termsAndUsage,
 } from "../../constants";
-import { books } from "../../components/shelves/constants";
+
+import useStore from "../../store";
+
+import * as S from "./styles";
 
 const Search: React.FC = () => {
+  const volumes = useStore((state) => state.volumes);
+
   return (
     <>
       <Header />
-      <Container>
-        <Content>
-        <Filters />
-        <ContentResults>
-          {books.map((shelf) => (
-            <>
-              {shelf.booksShelf.map((book) => (
-                <ContentResultsWrapper>
-                  <ContentResultsCover>
-                    <img src={book.urlImage} alt={book.slug} />
-                  </ContentResultsCover>
-                  <ContentResultsTitle>
-                    <label>{book.title} </label>
-                  </ContentResultsTitle>
-                  <ContentResultsCategory>
-                    <span>{book.autor}</span>
-                  </ContentResultsCategory>
-                </ContentResultsWrapper>
+      <S.Container>
+        <S.Content>
+          <Filters />
+          {volumes.length ? (
+            <S.ContentResults>
+              {volumes.map(({ id, volumeInfo }) => (
+                <S.ContentResultsWrapper key={id}>
+                  <S.ContentResultsCover>
+                    <img
+                      src={volumeInfo?.imageLinks?.thumbnail}
+                      alt={volumeInfo?.title}
+                    />
+                  </S.ContentResultsCover>
+                  <S.ContentResultsTitle>
+                    <label>{volumeInfo?.title} </label>
+                  </S.ContentResultsTitle>
+                  <S.ContentResultsCategory>
+                    <span>{volumeInfo?.authors?.join(", ")}</span>
+                  </S.ContentResultsCategory>
+                </S.ContentResultsWrapper>
               ))}
-            </>
-          ))}
-        </ContentResults>
-        </Content>
-      </Container>
+            </S.ContentResults>
+          ) : (
+            <h2>Nenhum resultado encontrado.</h2>
+          )}
+        </S.Content>
+      </S.Container>
       <Footer
         text={footerAllrightsReserved}
         privacyText={privacyAndPolicy}

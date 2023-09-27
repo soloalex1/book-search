@@ -3,13 +3,7 @@ export interface VolumeData {
   id: string;
   etag: string;
   selfLink: string;
-  volumeInfo: {
-    title: string;
-    subtitle: string;
-    authors: string[];
-    publishedDate: string;
-    description: string;
-  };
+  volumeInfo: VolumeInfo;
   saleInfo: {
     saleability: string;
   };
@@ -19,7 +13,22 @@ export interface VolumeData {
   };
 }
 
+type VolumeInfo = {
+  title: string;
+  subtitle: string;
+  authors: string[];
+  publishedDate: string;
+  description: string;
+  categories: string[];
+  imageLinks: VolumeImages;
+};
+
 type Availability = {
   isAvailable: boolean;
   acsTokenLink?: string;
+};
+
+type VolumeImages = {
+  smallThumbnail?: string;
+  thumbnail?: string;
 };

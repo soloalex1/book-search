@@ -15,12 +15,9 @@ const Header: React.FC = () => {
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.target);
+    const form = Object.fromEntries(new FormData(e.target).entries());
 
-    console.log("form", form);
-
-    // @ts-ignore
-    getVolumes(form.search).then((data) => {
+    getVolumes(form.search as string).then((data) => {
       setVolumes(data);
     });
 

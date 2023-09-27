@@ -11,8 +11,8 @@ type SuggestionsProps = {
 const Suggestions: React.FC<SuggestionsProps> = ({ data }) => {
   return data.length ? (
     <S.ListContainer>
-      {data?.map((data, index) => (
-        <li key={index}>{data.volumeInfo.title}</li>
+      {data?.map(({ id, volumeInfo }) => (
+        <li key={id}>{volumeInfo.title}</li>
       ))}
     </S.ListContainer>
   ) : null;
