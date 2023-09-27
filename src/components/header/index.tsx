@@ -1,17 +1,18 @@
 import React, { ChangeEvent, useState, useEffect, useCallback } from "react";
 
 import Search from "../search";
+import Suggestions from "../search/suggestions";
 
 import useDebounce from "../../hooks/useDebounce";
 
 import { getVolumes } from "../../api";
 
-import { Container, Content, ContentSearch, ContentUser } from "./styles";
+import * as S from "./styles";
 
 import useStore from "../../store";
 
 const Header: React.FC = () => {
-  const { setSuggestions } = useStore((state) => state);
+  const { suggestions, setSuggestions } = useStore((state) => state);
 
   const [term, setTerm] = useState("");
   const debounceTerm = useDebounce(term);
@@ -20,21 +21,24 @@ const Header: React.FC = () => {
     setTerm(e.target.value);
   };
 
-  const handleSearch = useCallback(async (query: string) => {
-    return await getVolumes(query);
+  const handleSearch = useCallback((query: string) => {
+    return getVolumes(query);
   }, []);
 
   useEffect(() => {
     if (debounceTerm) {
       handleSearch(debounceTerm).then((data) => {
         if (data) setSuggestions(data);
+        return;
       });
     }
+
+    setSuggestions([]);
   }, [debounceTerm, handleSearch]);
 
   return (
-    <Container>
-      <Content>
+    <S.Container>
+      <S.Content>
         <div>
           <a href="/">
             <img
@@ -45,14 +49,15 @@ const Header: React.FC = () => {
             />
           </a>
         </div>
-        <ContentSearch>
+        <S.ContentSearch>
           <Search value={term} onChange={onChangeTerm} />
-        </ContentSearch>
-        <ContentUser>
+          <Suggestions data={suggestions} />
+        </S.ContentSearch>
+        <S.ContentUser>
           <p>login</p>
-        </ContentUser>
-      </Content>
-    </Container>
+        </S.ContentUser>
+      </S.Content>
+    </S.Container>
   );
 };
 

@@ -27,7 +27,6 @@ export const getVolumes = async (
   }
 
   const { items }: JSONResponse = await response.json();
-
   return items;
 };
 

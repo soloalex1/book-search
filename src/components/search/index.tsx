@@ -1,18 +1,20 @@
 import React from "react";
-import { Icon, InputSearch } from "./styles";
+
+import * as S from "./styles";
+
 import { SearchProps } from "./types";
 
 const Search: React.FC<SearchProps> = ({ value, onChange }) => {
   return (
-    <>
-      <InputSearch
+    <S.SearchContainer>
+      <S.InputSearch
         type="text"
         value={value}
         onChange={onChange}
         placeholder="Pesquisar..."
       />
-      <Icon />
-    </>
+      <S.Icon />
+    </S.SearchContainer>
   );
 };
 
