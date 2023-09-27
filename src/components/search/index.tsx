@@ -7,7 +7,7 @@ import * as S from "./styles";
 import { SearchProps } from "./types";
 import Suggestions from "./suggestions";
 
-const Search: React.FC<SearchProps> = ({ value, onChange }) => {
+const Search: React.FC<SearchProps> = ({ value, onChange, onBlur }) => {
   const { suggestions } = useStore((state) => state);
 
   return (
@@ -16,6 +16,7 @@ const Search: React.FC<SearchProps> = ({ value, onChange }) => {
         type="text"
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder="Pesquisar..."
       />
       <S.Icon />

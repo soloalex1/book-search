@@ -25,6 +25,10 @@ const Header: React.FC = () => {
     return getVolumes(query);
   }, []);
 
+  const handleBlur = () => {
+    setSuggestions([]);
+  };
+
   useEffect(() => {
     if (debounceTerm) {
       handleSearch(debounceTerm).then((data) => {
@@ -50,8 +54,7 @@ const Header: React.FC = () => {
           </a>
         </div>
         <S.ContentSearch>
-          <Search value={term} onChange={onChangeTerm} />
-          {/* <Suggestions data={suggestions} /> */}
+          <Search value={term} onChange={onChangeTerm} onBlur={handleBlur} />
         </S.ContentSearch>
         <S.ContentUser>
           <p>login</p>
