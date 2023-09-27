@@ -12,13 +12,25 @@ import {
 import useStore from "../../store";
 
 import * as S from "./styles";
+import { VolumeInfo } from "../../types";
+import Spinner from "../../components/spinner";
 
 const Search: React.FC = () => {
-  const { volumes, setSuggestions } = useStore((state) => state);
+  const { volumes, setSuggestions, setLoading } = useStore((state) => state);
 
   useEffect(() => {
     setSuggestions([]);
+    setLoading(true);
   }, []);
+
+  const getVolumeImage = (volumeInfo: VolumeInfo) => {
+    if (!volumeInfo) return;
+
+    return (
+      volumeInfo?.imageLinks?.thumbnail ||
+      volumeInfo?.imageLinks?.smallThumbnail
+    );
+  };
 
   return (
     <>
@@ -32,8 +44,9 @@ const Search: React.FC = () => {
                 <S.ContentResultsWrapper key={id}>
                   <S.ContentResultsCover>
                     <img
-                      src={volumeInfo?.imageLinks?.thumbnail}
+                      src={getVolumeImage(volumeInfo)}
                       alt={volumeInfo?.title}
+                      loading="lazy"
                     />
                   </S.ContentResultsCover>
                   <S.ContentResultsTitle>
@@ -46,7 +59,10 @@ const Search: React.FC = () => {
               ))}
             </S.ContentResults>
           ) : (
-            <h2>Nenhum resultado encontrado.</h2>
+            <>
+              <Spinner />
+              <h2>Carregando...</h2>
+            </>
           )}
         </S.Content>
       </S.Container>

@@ -13,7 +13,7 @@ export interface VolumeData {
   };
 }
 
-type VolumeInfo = {
+export type VolumeInfo = {
   title: string;
   subtitle: string;
   authors: string[];

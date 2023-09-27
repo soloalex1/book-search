@@ -15,6 +15,7 @@ interface BookStore {
     fiction: VolumeData[];
   };
 
+  setLoading(loading: boolean): void;
   setVolumes(volumes: VolumeData[]): void;
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
@@ -35,6 +36,8 @@ const useStore = create<BookStore>()((set) => ({
     adventure: [],
     fiction: [],
   },
+
+  setLoading: (loading) => set((state) => ({ ...state, isLoading: loading })),
 
   setVolumes: (volumes) => set((state) => ({ ...state, volumes })),
 
