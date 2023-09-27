@@ -16,7 +16,9 @@ import { VolumeInfo } from "../../types";
 import Spinner from "../../components/spinner";
 
 const Search: React.FC = () => {
-  const { volumes, setSuggestions, setLoading } = useStore((state) => state);
+  const { volumes, setSuggestions, setLoading, setFilters } = useStore(
+    (state) => state
+  );
 
   useEffect(() => {
     setSuggestions([]);
@@ -32,12 +34,20 @@ const Search: React.FC = () => {
     );
   };
 
+  const resetFilters = () => {
+    setFilters({});
+  };
+
   return (
     <>
       <Header />
       <S.Container>
         <S.Content>
-          <Filters />
+          <Filters
+            mainTitle="Filtros"
+            hasSelectedFilters={true}
+            resetFilters={resetFilters}
+          />
           {volumes.length ? (
             <S.ContentResults>
               {volumes.map(({ id, volumeInfo }) => (

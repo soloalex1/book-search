@@ -15,6 +15,7 @@ export const ListContainer = styled.ul`
     padding: 8px;
     background-color: transparent;
     transition: all 100ms ease-in-out;
+    text-align: left;
 
     &:hover {
       background-color: #45d0c169;
