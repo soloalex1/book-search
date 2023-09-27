@@ -1,18 +1,16 @@
 import React, { ChangeEvent, useState, useEffect, useCallback } from "react";
 
 import Search from "../search";
-import Suggestions from "../search/suggestions";
 
 import useDebounce from "../../hooks/useDebounce";
 
+import useStore from "../../store";
 import { getVolumes } from "../../api";
 
 import * as S from "./styles";
 
-import useStore from "../../store";
-
 const Header: React.FC = () => {
-  const { suggestions, setSuggestions } = useStore((state) => state);
+  const { setSuggestions } = useStore((state) => state);
 
   const [term, setTerm] = useState("");
   const debounceTerm = useDebounce(term);

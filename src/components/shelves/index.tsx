@@ -13,7 +13,7 @@ import { books } from "./constants";
 
 import { getSubjects } from "../../api";
 
-const CATEGORIES = ["adventure", "fiction", "action"];
+const CATEGORIES = ["action", "adventure", "fiction"];
 
 const Shelves: React.FC = () => {
   const handleSearch = useCallback(async () => {
@@ -22,7 +22,7 @@ const Shelves: React.FC = () => {
 
   useEffect(() => {
     handleSearch().then((data) => {
-      console.log("data", data);
+      // console.log("data", data);
     });
   }, []);
 
