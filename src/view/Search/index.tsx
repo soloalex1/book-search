@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/header";
 import Filters from "../../components/filters";
 import Footer from "../../components/footer";
@@ -14,7 +14,11 @@ import useStore from "../../store";
 import * as S from "./styles";
 
 const Search: React.FC = () => {
-  const volumes = useStore((state) => state.volumes);
+  const { volumes, setSuggestions } = useStore((state) => state);
+
+  useEffect(() => {
+    setSuggestions([]);
+  }, []);
 
   return (
     <>
