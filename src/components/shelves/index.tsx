@@ -22,7 +22,7 @@ const Shelves: React.FC = () => {
 
   useEffect(() => {
     handleSearch().then((data) => {
-      // console.log("data", data);
+      console.log("data", data);
     });
   }, []);
 

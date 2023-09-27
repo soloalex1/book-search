@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const Content = styled.div`
+  text-align: left;
   background-color: #fff;
+  color: #222;
   width: 100%;
-  border: 1px solid red;
 
   @media (min-width: 992px) {
     padding: 0;
@@ -12,18 +13,25 @@ export const Content = styled.div`
 `;
 
 export const ContentTitle = styled.p`
-  color: #9eaeb7;
-  font-size: 16px;
+  color: #222;
+  font-size: 24px;
   font-weight: 700;
 `;
 
 export const Button = styled.button`
   height: 40px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 16px;
   text-transform: uppercase;
-  background-color: #adb7bf;
+  font-weight: 700;
+  background-color: #45d0c1;
+  color: white;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    border-color: transparent;
+    background-color: #37a69a;
+  }
 `;
 
 export const FilterTitle = styled.p`
@@ -42,6 +50,6 @@ export const FilterContent = styled.div`
     margin-bottom: 3px;
   }
   & > ul > li > span {
-    color: #053b4b;
+    color: #222;
   }
 `;

@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  Content,
-  ContentTitle,
-  Button,
-  FilterTitle,
-  FilterContent,
-} from "./styles";
-import { FilterProps } from "./types";
+import * as S from "./styles";
 
+import { FilterProps } from "./types";
 import filtersWithInitialState from "./constants";
 
 const Filter: React.FC<FilterProps> = ({
@@ -22,7 +16,7 @@ const Filter: React.FC<FilterProps> = ({
   };
 
   const renderPriceFilters = (
-    <FilterContent>
+    <S.FilterContent>
       <ul>
         {price.items.map((option) => (
           <li key={option.id}>
@@ -36,11 +30,11 @@ const Filter: React.FC<FilterProps> = ({
           </li>
         ))}
       </ul>
-    </FilterContent>
+    </S.FilterContent>
   );
 
   const renderFormatFilters = (
-    <FilterContent>
+    <S.FilterContent>
       <ul>
         {availableFormats.items.map((option, index) => (
           <li key={index}>
@@ -54,31 +48,32 @@ const Filter: React.FC<FilterProps> = ({
           </li>
         ))}
       </ul>
-    </FilterContent>
+    </S.FilterContent>
   );
 
   return (
-    <Content>
-      <ContentTitle>{mainTitle}</ContentTitle>
+    <S.Content>
+      <S.ContentTitle>{mainTitle}</S.ContentTitle>
       {hasSelectedFilters && (
-        <Button onClick={resetFilters}>Limpar Filtro</Button>
+        <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
       )}
 
-      <FilterTitle>{price.title}</FilterTitle>
+      <S.FilterTitle>{price.title}</S.FilterTitle>
       {renderPriceFilters}
 
-      <FilterTitle>{availableFormats.title}</FilterTitle>
+      <S.FilterTitle>{availableFormats.title}</S.FilterTitle>
       {renderFormatFilters}
 
-      <FilterTitle>{availableItems.title}</FilterTitle>
-      <FilterContent>
+      <S.FilterContent>
         <input
+          id="availableItems"
           type="checkbox"
           name="availableItems"
           checked={availableItems.checked}
         />
-      </FilterContent>
-    </Content>
+        <label htmlFor="availableItems">{availableItems.title}</label>
+      </S.FilterContent>
+    </S.Content>
   );
 };
 
