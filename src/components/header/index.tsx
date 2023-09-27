@@ -51,7 +51,7 @@ const Header: React.FC = () => {
         </div>
         <S.ContentSearch>
           <Search value={term} onChange={onChangeTerm} />
-          <Suggestions data={suggestions} />
+          {/* <Suggestions data={suggestions} /> */}
         </S.ContentSearch>
         <S.ContentUser>
           <p>login</p>
