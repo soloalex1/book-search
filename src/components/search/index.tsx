@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 
 import useStore from "../../store";
 
 import * as S from "./styles";
-
-import { SearchProps } from "./types";
 import Suggestions from "./suggestions";
+import useDebounce from "../../hooks/useDebounce";
 
-const Search: React.FC<SearchProps> = ({ value, onChange, onBlur }) => {
-  const { suggestions } = useStore((state) => state);
+import { getVolumes } from "../../api";
+
+type SearchProps = {
+  onSubmit(e: ChangeEvent<HTMLFormElement>): void;
+};
+
+const Search: React.FC<SearchProps> = ({ onSubmit }) => {
+  const { suggestions, setSuggestions } = useStore((state) => state);
+
+  const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value);
+
+  const handleSearch = useCallback((query: string) => {
+    return getVolumes(query);
+  }, []);
+
+  const handleBlur = () => {
+    setSuggestions([]);
+  };
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  useEffect(() => {
+    if (debounceValue) {
+      handleSearch(debounceValue).then((data) => {
+        if (data) setSuggestions(data);
+        return;
+      });
+    }
+
+    setSuggestions([]);
+  }, [debounceValue, handleSearch]);
 
   return (
-    <S.SearchContainer>
+    <S.SearchContainer onSubmit={onSubmit}>
       <S.InputSearch
+        name="search"
         type="text"
         value={value}
         onChange={onChange}
-        onBlur={onBlur}
+        onBlur={handleBlur}
         placeholder="Pesquisar..."
       />
       <S.Icon />

@@ -1,42 +1,31 @@
-import React, { ChangeEvent, useState, useEffect, useCallback } from "react";
+import React, { ChangeEvent } from "react";
+import { useHistory } from "react-router-dom";
 
 import Search from "../search";
 
-import useDebounce from "../../hooks/useDebounce";
-
-import useStore from "../../store";
 import { getVolumes } from "../../api";
+import useStore from "../../store";
 
 import * as S from "./styles";
 
 const Header: React.FC = () => {
-  const { setSuggestions } = useStore((state) => state);
+  const history = useHistory();
 
-  const [term, setTerm] = useState("");
-  const debounceTerm = useDebounce(term);
+  const { setVolumes } = useStore((state) => state);
 
-  const onChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
-    setTerm(e.target.value);
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+
+    console.log("form", form);
+
+    // @ts-ignore
+    getVolumes(form.search).then((data) => {
+      setVolumes(data);
+    });
+
+    history.push("/search");
   };
-
-  const handleSearch = useCallback((query: string) => {
-    return getVolumes(query);
-  }, []);
-
-  const handleBlur = () => {
-    setSuggestions([]);
-  };
-
-  useEffect(() => {
-    if (debounceTerm) {
-      handleSearch(debounceTerm).then((data) => {
-        if (data) setSuggestions(data);
-        return;
-      });
-    }
-
-    setSuggestions([]);
-  }, [debounceTerm, handleSearch]);
 
   return (
     <S.Container>
@@ -52,7 +41,7 @@ const Header: React.FC = () => {
           </a>
         </div>
         <S.ContentSearch>
-          <Search value={term} onChange={onChangeTerm} onBlur={handleBlur} />
+          <Search onSubmit={handleSubmit} />
         </S.ContentSearch>
         <S.ContentUser>
           <p>login</p>
