@@ -37,16 +37,20 @@ export const getVolumeDetails = async (
 };
 
 export const getSubjects = async (subjects: string[]) => {
-  const params = new URLSearchParams({
-    q: `subject:${subjects.join("+")}`,
+  const allResponses = subjects.map(async (subject) => {
+    const params = new URLSearchParams({
+      q: `subject:${subject}`,
+    });
+
+    const response = await fetch(`${ROOT_URL}/volumes?${params.toString()}`);
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      return Promise.reject(new Error(errorMessage));
+    }
+
+    return await response.json();
   });
 
-  const response = await fetch(`${ROOT_URL}/volumes?q=${params.toString()}`);
-
-  if (!response.ok) {
-    const errorMessage = await response.text();
-    return Promise.reject(new Error(errorMessage));
-  }
-
-  return await response.json();
+  return Promise.all(allResponses);
 };
