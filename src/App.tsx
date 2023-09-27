@@ -1,20 +1,16 @@
-import Footer from "./components/footer";
-import Header from "./components/header";
-import Shelves from "./components/shelves";
-import { footerAllrightsReserved, helpLink, privacyAndPolicy, termsAndUsage } from "./constants";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import Home from "./view/Home";
+import Search from "./view/Search";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Shelves />
-      <Footer
-        text={footerAllrightsReserved}
-        privacyText={privacyAndPolicy}
-        termsAndUsageText={termsAndUsage}
-        helpText={helpLink}
-      />
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/search" component={Search} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

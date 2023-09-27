@@ -1,9 +1,15 @@
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import Shelves from "../../components/shelves";
-import { footerAllrightsReserved, helpLink, privacyAndPolicy, termsAndUsage } from "../../constants";
+import {
+  footerAllrightsReserved,
+  helpLink,
+  privacyAndPolicy,
+  termsAndUsage,
+} from "../../constants";
 
-function Home(){
+const Home: React.FC = () => {
+  return (
     <>
       <Header />
       <Shelves />
@@ -14,6 +20,7 @@ function Home(){
         helpText={helpLink}
       />
     </>
-}
+  );
+};
 
-export default Home
+export default Home;
