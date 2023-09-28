@@ -33,6 +33,15 @@ type VolumeImages = {
   thumbnail?: string;
 };
 
+export type SearchFilters = {
+  price: {
+    min?: number;
+    max?: number;
+  };
+  availableFormats: string[];
+  availableItems: boolean;
+};
+
 export type JSONResponse = {
   kind: string;
   totalItems: number;
