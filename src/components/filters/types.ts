@@ -9,7 +9,6 @@ export type PriceFilter = {
   items: {
     id: number;
     label: string;
-    checked: boolean;
     rangeValue: {
       min?: number;
       max?: number;
@@ -26,6 +25,6 @@ export type FormatFilter = {
   title: string;
   items: {
     label: string;
-    checked: boolean;
+    slug: string;
   }[];
 };

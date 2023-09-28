@@ -7,7 +7,6 @@ const filtersWithInitialState: FilterContentProps = {
       {
         id: 1,
         label: "de R$0 até R$30",
-        checked: false,
         rangeValue: {
           max: 30,
         },
@@ -15,7 +14,6 @@ const filtersWithInitialState: FilterContentProps = {
       {
         id: 2,
         label: "de R$31 até R$50",
-        checked: false,
         rangeValue: {
           min: 31,
           max: 50,
@@ -24,7 +22,6 @@ const filtersWithInitialState: FilterContentProps = {
       {
         id: 3,
         label: "de R$51 até R$100",
-        checked: false,
         rangeValue: {
           min: 51,
           max: 100,
@@ -33,7 +30,6 @@ const filtersWithInitialState: FilterContentProps = {
       {
         id: 4,
         label: "Mais de R$100",
-        checked: false,
         rangeValue: {
           min: 100,
         },
@@ -49,11 +45,11 @@ const filtersWithInitialState: FilterContentProps = {
     items: [
       {
         label: "PDF",
-        checked: false,
+        slug: "pdf",
       },
       {
-        label: "Epub",
-        checked: false,
+        label: "ePUB",
+        slug: "epub",
       },
     ],
   },

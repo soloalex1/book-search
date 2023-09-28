@@ -35,7 +35,7 @@ type VolumeImages = {
 
 export type SearchFilters = {
   price: Price;
-  availableFormats: string[];
+  availableFormats: Format;
   availableItems: boolean;
 };
 
@@ -43,6 +43,11 @@ export type Price = {
   id?: number;
   min?: number;
   max?: number;
+};
+
+export type Format = {
+  pdf: boolean;
+  epub: boolean;
 };
 
 export type JSONResponse = {

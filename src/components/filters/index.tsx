@@ -5,19 +5,30 @@ import filtersWithInitialState from "./constants";
 import useStore from "../../store";
 
 import * as S from "./styles";
+import { Format } from "../../types";
 
 const Filter: React.FC = () => {
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
 
-  const { filters, setAvailabilityFilters, setPriceFilters, resetFilters } =
-    useStore((state) => state);
+  const {
+    filters,
+    setAvailabilityFilters,
+    setPriceFilters,
+    setFormatFilters,
+    resetFilters,
+  } = useStore((state) => state);
 
   const { price, availableFormats, availableItems } = filters;
 
-  const hasFilters = useMemo(() => {
-    return filters.availableItems;
-  }, [filters]);
+  const hasFilters = useMemo(
+    () =>
+      availableItems ||
+      price.id ||
+      availableFormats.pdf ||
+      availableFormats.epub,
+    [filters]
+  );
 
   const onChangePriceFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const priceMapped = priceLabels.items.find(
@@ -27,12 +38,10 @@ const Filter: React.FC = () => {
     setPriceFilters({ id: priceMapped?.id, ...priceMapped?.rangeValue! });
   };
 
-  const onChangeFormatFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const action = {
-      label: target.name,
-      value: target.checked ? target.name : "",
-    };
-    console.log(action);
+  const onChangeFormatFilter = ({
+    target: { name, checked },
+  }: ChangeEvent<HTMLInputElement>) => {
+    setFormatFilters(name as keyof Format, checked);
   };
 
   const onChangeAvailabilityFilter = ({
@@ -49,7 +58,7 @@ const Filter: React.FC = () => {
             <input
               name="price"
               type="radio"
-              checked={id === filters.price?.id}
+              checked={id === price?.id}
               onChange={onChangePriceFilter}
               value={id}
             />
@@ -63,15 +72,15 @@ const Filter: React.FC = () => {
   const renderFormatFilters = (
     <S.FilterContent>
       <ul>
-        {formatLabels.items.map((option, index) => (
+        {formatLabels.items.map(({ label, slug }, index) => (
           <li key={index}>
             <input
-              name={option.label.toLowerCase()}
+              name={slug}
               type="checkbox"
-              checked={false}
+              checked={availableFormats[slug as keyof Format]}
               onChange={onChangeFormatFilter}
             />
-            <span>{option.label}</span>
+            <span>{label}</span>
           </li>
         ))}
       </ul>

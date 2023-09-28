@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { SearchFilters, VolumeData, Price } from "../types";
+import { SearchFilters, VolumeData, Price, Format } from "../types";
 
 interface BookStore {
   isLoading: boolean;
@@ -21,6 +21,7 @@ interface BookStore {
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
   setPriceFilters(price: Price): void;
+  setFormatFilters(label: keyof Format, value: boolean): void;
   setAvailabilityFilters(value: boolean): void;
   resetFilters(): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
@@ -34,7 +35,10 @@ const initialState = {
   currentPage: 1,
   filters: {
     price: {},
-    availableFormats: [],
+    availableFormats: {
+      epub: false,
+      pdf: false,
+    },
     availableItems: false,
   },
   shelves: {
@@ -64,6 +68,17 @@ const useStore = create<BookStore>()((set) => ({
         price: {
           ...state.filters.price,
           ...price,
+        },
+      },
+    })),
+
+  setFormatFilters: (label, value) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        availableFormats: {
+          ...state.filters.availableFormats,
+          [label]: value,
         },
       },
     })),
