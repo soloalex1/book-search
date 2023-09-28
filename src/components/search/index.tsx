@@ -14,6 +14,7 @@ type SearchProps = {
 
 const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const { suggestions, setSuggestions } = useStore((state) => state);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const [value, setValue] = useState("");
   const debounceValue = useDebounce(value);
@@ -22,10 +23,6 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
     return getVolumes(query);
   }, []);
 
-  const handleBlur = () => {
-    setSuggestions([]);
-  };
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -33,12 +30,16 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   useEffect(() => {
     if (debounceValue) {
       handleSearch(debounceValue).then((data) => {
-        if (data) setSuggestions(data);
+        if (data) {
+          setSuggestions(data);
+          setShowSuggestions(true);
+        }
         return;
       });
     }
 
     setSuggestions([]);
+    setShowSuggestions(false);
   }, [debounceValue, handleSearch]);
 
   return (
@@ -48,11 +49,12 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
         type="text"
         value={value}
         onChange={onChange}
-        onBlur={handleBlur}
+        onFocus={() => setShowSuggestions(true)}
+        onBlur={() => setShowSuggestions(false)}
         placeholder="Pesquisar..."
       />
       <S.Icon />
-      <Suggestions data={suggestions} />
+      {showSuggestions ? <Suggestions data={suggestions} /> : null}
     </S.SearchContainer>
   );
 };
