@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 
-import useStore from "../../store";
+import Suggestions from "@/components/search/suggestions";
+
+import useStore from "@/store";
+import { getVolumes } from "@/api";
+
+import useDebounce from "@/hooks/useDebounce";
 
 import * as S from "./styles";
-import Suggestions from "./suggestions";
-import useDebounce from "../../hooks/useDebounce";
-
-import { getVolumes } from "../../api";
 
 type SearchProps = {
   onSubmit(e: ChangeEvent<HTMLFormElement>): void;
@@ -20,7 +21,7 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const debounceValue = useDebounce(value);
 
   const handleSearch = useCallback((query: string) => {
-    return getVolumes(query);
+    return getVolumes(query, 0, 40);
   }, []);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

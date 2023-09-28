@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Container,
   Content,
@@ -9,7 +10,12 @@ import {
 } from "./styles";
 import { FooterProps } from "./types";
 
-const Footer: React.FC<FooterProps> = ({text, privacyText, termsAndUsageText, helpText }) => {
+const Footer: React.FC<FooterProps> = ({
+  text,
+  privacyText,
+  termsAndUsageText,
+  helpText,
+}) => {
   return (
     <Container>
       <Content>

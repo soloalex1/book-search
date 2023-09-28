@@ -1,11 +1,10 @@
 import React, { useMemo, ChangeEvent } from "react";
 
+import useStore from "@/store";
+import { Format } from "@/types";
+
 import filtersWithInitialState from "./constants";
-
-import useStore from "../../store";
-
 import * as S from "./styles";
-import { Format } from "../../types";
 
 const Filter: React.FC = () => {
   const { priceLabels, formatLabels, availableLabels } =

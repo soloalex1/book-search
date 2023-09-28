@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 
-import { settings } from "../carousel/constants";
-import Carousel from "../carousel";
+import { settings } from "@/components/carousel/constants";
+import Carousel from "@/components/carousel";
 
-import { getSubjects } from "../../api";
-import { VolumeData } from "../../types";
-import useStore from "../../store";
+import { getSubjects } from "@/api";
+import { VolumeData } from "@/types";
+import useStore from "@/store";
 
 import * as S from "./styles";
 

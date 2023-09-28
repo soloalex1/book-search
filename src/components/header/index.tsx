@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from "react";
 import { useHistory } from "react-router-dom";
 
-import Search from "../search";
+import Search from "@/components/search";
 
-import { getVolumes } from "../../api";
-import useStore from "../../store";
+import { getVolumes } from "@/api";
+import useStore from "@/store";
 
 import * as S from "./styles";
 
