@@ -1,54 +1,63 @@
 import React, { useCallback, useEffect } from "react";
-import {
-  Container,
-  Content,
-  ContentItem,
-  ContentList,
-  Shelf,
-  TitleCategory,
-} from "./styles";
+
 import { settings } from "../carousel/constants";
 import Carousel from "../carousel";
-import { books } from "./constants";
 
 import { getSubjects } from "../../api";
+import { VolumeData } from "../../types";
+import useStore from "../../store";
+
+import * as S from "./styles";
 
 const CATEGORIES = ["action", "adventure", "fiction"];
 
+type ShelfKey = "action" | "adventure" | "fiction";
+
 const Shelves: React.FC = () => {
+  const { shelves, setShelf } = useStore((state) => state);
+
   const handleSearch = useCallback(async () => {
     return await getSubjects(CATEGORIES);
   }, []);
 
   useEffect(() => {
     handleSearch().then((data) => {
-      console.log("data", data);
+      data.forEach(({ subject, items }) => {
+        setShelf(subject as ShelfKey, items);
+      });
     });
   }, []);
 
+  const renderShelf = (shelfName: string, shelf: VolumeData[]) => {
+    return (
+      <S.Shelf>
+        <S.ContentList>
+          <S.TitleCategory>{shelfName}</S.TitleCategory>
+          <S.Content>
+            <Carousel settings={settings} spaceBetweenItems="16px">
+              {shelf.map(({ id, volumeInfo }) => (
+                <S.ContentItem key={id}>
+                  <img
+                    src={volumeInfo?.imageLinks?.thumbnail}
+                    alt={volumeInfo.title}
+                  />
+                </S.ContentItem>
+              ))}
+            </Carousel>
+          </S.Content>
+        </S.ContentList>
+      </S.Shelf>
+    );
+  };
+
+  // todo adicionar destaque. como? mistério....
   return (
-    <Container>
-      <Shelf>
-        {books.map((shelf) => {
-          return (
-            <ContentList>
-              <TitleCategory key={shelf.id}>
-                {shelf.shelfCategory}
-              </TitleCategory>
-              <Content>
-                <Carousel settings={settings} spaceBetweenItems="16px">
-                  {shelf.booksShelf.map((book) => (
-                    <ContentItem key={book.title}>
-                      <img src={book.urlImage} alt={book.slug} />
-                    </ContentItem>
-                  ))}
-                </Carousel>
-              </Content>
-            </ContentList>
-          );
-        })}
-      </Shelf>
-    </Container>
+    <S.Container>
+      {renderShelf("Destaque", shelves.action)}
+      {renderShelf("Ação", shelves.action)}
+      {renderShelf("Aventura", shelves.adventure)}
+      {renderShelf("Ficção", shelves.fiction)}
+    </S.Container>
   );
 };
 

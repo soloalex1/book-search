@@ -1,12 +1,6 @@
-import { VolumeData } from "./types";
+import { VolumeData, JSONResponse } from "./types";
 
 const ROOT_URL = "https://www.googleapis.com/books/v1";
-
-type JSONResponse = {
-  kind: string;
-  totalItems: number;
-  items: VolumeData[];
-};
 
 export const getVolumes = async (
   query: string,
@@ -43,7 +37,8 @@ export const getSubjects = async (subjects: string[]) => {
       return Promise.reject(new Error(errorMessage));
     }
 
-    return await response.json();
+    const { items }: JSONResponse = await response.json();
+    return { subject, items };
   });
 
   return Promise.all(allResponses);

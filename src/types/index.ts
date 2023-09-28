@@ -32,3 +32,9 @@ type VolumeImages = {
   smallThumbnail?: string;
   thumbnail?: string;
 };
+
+export type JSONResponse = {
+  kind: string;
+  totalItems: number;
+  items: VolumeData[];
+};
