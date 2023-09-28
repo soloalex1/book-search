@@ -34,12 +34,15 @@ type VolumeImages = {
 };
 
 export type SearchFilters = {
-  price: {
-    min?: number;
-    max?: number;
-  };
+  price: Price;
   availableFormats: string[];
   availableItems: boolean;
+};
+
+export type Price = {
+  id?: number;
+  min?: number;
+  max?: number;
 };
 
 export type JSONResponse = {

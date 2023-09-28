@@ -1,50 +1,59 @@
-import React, { ChangeEvent } from "react";
-import * as S from "./styles";
+import React, { useMemo, ChangeEvent } from "react";
 
-import { FilterProps } from "./types";
 import filtersWithInitialState from "./constants";
 
 import useStore from "../../store";
 
-const Filter: React.FC<FilterProps> = ({
-  mainTitle,
-  hasSelectedFilters,
-  dispatch,
-}) => {
+import * as S from "./styles";
+
+const Filter: React.FC = () => {
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
 
-  const {
-    filters: { price, availableFormats, availableItems },
-    resetFilters,
-  } = useStore((state) => state);
+  const { filters, setAvailabilityFilters, setPriceFilters, resetFilters } =
+    useStore((state) => state);
 
-  const handleToggleCheckbox = () => {
-    console.log("click");
+  const { price, availableFormats, availableItems } = filters;
+
+  const hasFilters = useMemo(() => {
+    return filters.availableItems;
+  }, [filters]);
+
+  const onChangePriceFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const priceMapped = priceLabels.items.find(
+      ({ id }) => id === Number(target.value)
+    );
+
+    setPriceFilters({ id: priceMapped?.id, ...priceMapped?.rangeValue! });
   };
 
   const onChangeFormatFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(target.name, target.checked);
+    const action = {
+      label: target.name,
+      value: target.checked ? target.name : "",
+    };
+    console.log(action);
   };
 
   const onChangeAvailabilityFilter = ({
     target,
   }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(target.name, target.checked);
+    setAvailabilityFilters(target.checked);
   };
 
   const renderPriceFilters = (
     <S.FilterContent>
       <ul>
-        {priceLabels.items.map((option) => (
-          <li key={option.id}>
+        {priceLabels.items.map(({ id, label }) => (
+          <li key={id}>
             <input
               name="price"
               type="radio"
-              checked={option.checked}
-              onChange={() => handleToggleCheckbox()}
+              checked={id === filters.price?.id}
+              onChange={onChangePriceFilter}
+              value={id}
             />
-            <span>{option.label}</span>
+            <span>{label}</span>
           </li>
         ))}
       </ul>
@@ -59,7 +68,7 @@ const Filter: React.FC<FilterProps> = ({
             <input
               name={option.label.toLowerCase()}
               type="checkbox"
-              checked={option.checked}
+              checked={false}
               onChange={onChangeFormatFilter}
             />
             <span>{option.label}</span>
@@ -71,10 +80,8 @@ const Filter: React.FC<FilterProps> = ({
 
   return (
     <S.Content>
-      <S.ContentTitle>{mainTitle}</S.ContentTitle>
-      {hasSelectedFilters && (
-        <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
-      )}
+      <S.ContentTitle>Filtrar resultados</S.ContentTitle>
+      {hasFilters && <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>}
 
       <S.FilterTitle>{priceLabels.title}</S.FilterTitle>
       {renderPriceFilters}
@@ -84,8 +91,8 @@ const Filter: React.FC<FilterProps> = ({
 
       <S.FilterContent>
         <input
-          id="availableItems"
           type="checkbox"
+          id="availableItems"
           name="availableItems"
           checked={availableItems}
           onChange={onChangeAvailabilityFilter}

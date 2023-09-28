@@ -11,18 +11,11 @@ import {
 import useStore from "../../store";
 
 import * as S from "./styles";
-import { SearchFilters, VolumeInfo } from "../../types";
+import { VolumeInfo } from "../../types";
 import Spinner from "../../components/spinner";
 
 const Search: React.FC = () => {
-  const {
-    volumes,
-    filters,
-    setSuggestions,
-    setLoading,
-    setFilters,
-    resetFilters,
-  } = useStore((state) => state);
+  const { volumes, setSuggestions, setLoading } = useStore((state) => state);
 
   useEffect(() => {
     setSuggestions([]);
@@ -38,21 +31,11 @@ const Search: React.FC = () => {
     );
   };
 
-  const applyFilters = (label: string, value: unknown) => {
-    setFilters(label as keyof SearchFilters, value);
-  };
-
   return (
     <>
       <S.Container>
         <S.Content>
-          <Filters
-            dispatch={applyFilters}
-            filters={filters}
-            mainTitle="Filtrar resultados"
-            hasSelectedFilters={true}
-            resetFilters={resetFilters}
-          />
+          <Filters />
           {volumes.length ? (
             <S.ContentResults>
               {volumes.map(({ id, volumeInfo }) => (

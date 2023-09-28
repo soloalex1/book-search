@@ -41,7 +41,7 @@ const filtersWithInitialState: FilterContentProps = {
     ],
   },
   availableLabels: {
-    title: "Disponível para venda?",
+    title: "Somente volumes disponíveis",
     checked: true,
   },
   formatLabels: {

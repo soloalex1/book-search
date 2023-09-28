@@ -1,13 +1,3 @@
-import { SearchFilters } from "../../types";
-
-export type FilterProps = {
-  mainTitle: string;
-  filters: SearchFilters;
-  dispatch: (label: string, value: unknown) => void;
-  hasSelectedFilters: boolean;
-  resetFilters: () => void;
-};
-
 export type FilterContentProps = {
   priceLabels: PriceFilter;
   availableLabels: AvailableFilter;

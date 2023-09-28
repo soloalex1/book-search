@@ -1,7 +1,6 @@
 import { create } from "zustand";
 
-import { SearchFilters, VolumeData } from "../types";
-import { FilterContentProps } from "../components/filters/types";
+import { SearchFilters, VolumeData, Price } from "../types";
 
 interface BookStore {
   isLoading: boolean;
@@ -21,7 +20,8 @@ interface BookStore {
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
-  setFilters(label: keyof BookStore["filters"], value: unknown): void;
+  setPriceFilters(price: Price): void;
+  setAvailabilityFilters(value: boolean): void;
   resetFilters(): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
 }
@@ -57,11 +57,22 @@ const useStore = create<BookStore>()((set) => ({
 
   setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
 
-  setFilters: (label, value) =>
+  setPriceFilters: (price: Price) =>
     set((state) => ({
       filters: {
         ...state.filters,
-        [label]: value,
+        price: {
+          ...state.filters.price,
+          ...price,
+        },
+      },
+    })),
+
+  setAvailabilityFilters: (value) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        availableItems: value,
       },
     })),
 
