@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { VolumeData } from "../types";
+import { FilterContentProps } from "../components/filters/types";
 
 interface BookStore {
   isLoading: boolean;
@@ -8,7 +9,7 @@ interface BookStore {
   suggestions: VolumeData[];
   currentVolume: VolumeData;
   currentPage: number;
-  filters: unknown;
+  filters: FilterContentProps;
   shelves: {
     action: VolumeData[];
     adventure: VolumeData[];
@@ -20,7 +21,7 @@ interface BookStore {
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
-  setFilters(filters: unknown): void;
+  setFilters(filters: Partial<FilterContentProps>): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
 }
 
@@ -30,30 +31,33 @@ const useStore = create<BookStore>()((set) => ({
   suggestions: [],
   currentVolume: <VolumeData>{},
   currentPage: 1,
-  filters: {},
+  filters: <FilterContentProps>{},
   shelves: {
     action: [],
     adventure: [],
     fiction: [],
   },
 
-  setLoading: (loading) => set((state) => ({ ...state, isLoading: loading })),
+  setLoading: (loading) => set(() => ({ isLoading: loading })),
 
-  setVolumes: (volumes) => set((state) => ({ ...state, volumes })),
+  setVolumes: (volumes) => set(() => ({ volumes })),
 
-  setSuggestions: (suggestions) => set((state) => ({ ...state, suggestions })),
+  setSuggestions: (suggestions) => set(() => ({ suggestions })),
 
-  setCurrentVolume: (currentVolume) =>
-    set((state) => ({ ...state, currentVolume })),
+  setCurrentVolume: (currentVolume) => set(() => ({ currentVolume })),
 
-  setCurrentPage: (page: number) =>
-    set((state) => ({ ...state, currentPage: page })),
+  setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
 
-  setFilters: (filters) => set((state) => ({ ...state, filters })),
+  setFilters: (filters) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        filters,
+      },
+    })),
 
   setShelf: (shelf, volumes) =>
     set((state) => ({
-      ...state,
       shelves: {
         ...state.shelves,
         [shelf]: volumes,
