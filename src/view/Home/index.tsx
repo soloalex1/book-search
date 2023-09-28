@@ -1,5 +1,4 @@
 import Footer from "../../components/footer";
-import Header from "../../components/header";
 import Shelves from "../../components/shelves";
 import {
   footerAllrightsReserved,
@@ -11,7 +10,6 @@ import {
 const Home: React.FC = () => {
   return (
     <>
-      <Header />
       <Shelves />
       <Footer
         text={footerAllrightsReserved}

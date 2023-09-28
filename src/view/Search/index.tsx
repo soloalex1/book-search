@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Header from "../../components/header";
 import Filters from "../../components/filters";
 import Footer from "../../components/footer";
 import {
@@ -14,9 +13,10 @@ import useStore from "../../store";
 import * as S from "./styles";
 import { VolumeInfo } from "../../types";
 import Spinner from "../../components/spinner";
+import { FilterContentProps } from "../../components/filters/types";
 
 const Search: React.FC = () => {
-  const { volumes, setSuggestions, setLoading, setFilters } = useStore(
+  const { volumes, filters, setSuggestions, setLoading, setFilters } = useStore(
     (state) => state
   );
 
@@ -38,13 +38,18 @@ const Search: React.FC = () => {
     setFilters({});
   };
 
+  const applyFilters = (filters: Partial<FilterContentProps>) => {
+    setFilters(filters);
+  };
+
   return (
     <>
-      <Header />
       <S.Container>
         <S.Content>
           <Filters
-            mainTitle="Filtros"
+            dispatch={applyFilters}
+            filters={filters}
+            mainTitle="Filtrar resultados"
             hasSelectedFilters={true}
             resetFilters={resetFilters}
           />
