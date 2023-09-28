@@ -11,14 +11,18 @@ import {
 import useStore from "../../store";
 
 import * as S from "./styles";
-import { VolumeInfo } from "../../types";
+import { SearchFilters, VolumeInfo } from "../../types";
 import Spinner from "../../components/spinner";
-import { FilterContentProps } from "../../components/filters/types";
 
 const Search: React.FC = () => {
-  const { volumes, filters, setSuggestions, setLoading, setFilters } = useStore(
-    (state) => state
-  );
+  const {
+    volumes,
+    filters,
+    setSuggestions,
+    setLoading,
+    setFilters,
+    resetFilters,
+  } = useStore((state) => state);
 
   useEffect(() => {
     setSuggestions([]);
@@ -34,12 +38,8 @@ const Search: React.FC = () => {
     );
   };
 
-  const resetFilters = () => {
-    setFilters({});
-  };
-
-  const applyFilters = (filters: Partial<FilterContentProps>) => {
-    setFilters(filters);
+  const applyFilters = (label: string, value: unknown) => {
+    setFilters(label as keyof SearchFilters, value);
   };
 
   return (

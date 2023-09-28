@@ -1,24 +1,42 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import * as S from "./styles";
 
 import { FilterProps } from "./types";
 import filtersWithInitialState from "./constants";
 
+import useStore from "../../store";
+
 const Filter: React.FC<FilterProps> = ({
   mainTitle,
   hasSelectedFilters,
-  resetFilters,
+  dispatch,
 }) => {
-  const { price, availableFormats, availableItems } = filtersWithInitialState;
+  const { priceLabels, formatLabels, availableLabels } =
+    filtersWithInitialState;
+
+  const {
+    filters: { price, availableFormats, availableItems },
+    resetFilters,
+  } = useStore((state) => state);
 
   const handleToggleCheckbox = () => {
     console.log("click");
   };
 
+  const onChangeFormatFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    dispatch(target.name, target.checked);
+  };
+
+  const onChangeAvailabilityFilter = ({
+    target,
+  }: ChangeEvent<HTMLInputElement>) => {
+    dispatch(target.name, target.checked);
+  };
+
   const renderPriceFilters = (
     <S.FilterContent>
       <ul>
-        {price.items.map((option) => (
+        {priceLabels.items.map((option) => (
           <li key={option.id}>
             <input
               name="price"
@@ -36,13 +54,13 @@ const Filter: React.FC<FilterProps> = ({
   const renderFormatFilters = (
     <S.FilterContent>
       <ul>
-        {availableFormats.items.map((option, index) => (
+        {formatLabels.items.map((option, index) => (
           <li key={index}>
             <input
-              name={option.label}
+              name={option.label.toLowerCase()}
               type="checkbox"
               checked={option.checked}
-              onChange={() => handleToggleCheckbox()}
+              onChange={onChangeFormatFilter}
             />
             <span>{option.label}</span>
           </li>
@@ -58,10 +76,10 @@ const Filter: React.FC<FilterProps> = ({
         <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
       )}
 
-      <S.FilterTitle>{price.title}</S.FilterTitle>
+      <S.FilterTitle>{priceLabels.title}</S.FilterTitle>
       {renderPriceFilters}
 
-      <S.FilterTitle>{availableFormats.title}</S.FilterTitle>
+      <S.FilterTitle>{formatLabels.title}</S.FilterTitle>
       {renderFormatFilters}
 
       <S.FilterContent>
@@ -69,9 +87,10 @@ const Filter: React.FC<FilterProps> = ({
           id="availableItems"
           type="checkbox"
           name="availableItems"
-          checked={availableItems.checked}
+          checked={availableItems}
+          onChange={onChangeAvailabilityFilter}
         />
-        <label htmlFor="availableItems">{availableItems.title}</label>
+        <label htmlFor="availableItems">{availableLabels.title}</label>
       </S.FilterContent>
     </S.Content>
   );

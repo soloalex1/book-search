@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { VolumeData } from "../types";
+import { SearchFilters, VolumeData } from "../types";
 import { FilterContentProps } from "../components/filters/types";
 
 interface BookStore {
@@ -9,7 +9,7 @@ interface BookStore {
   suggestions: VolumeData[];
   currentVolume: VolumeData;
   currentPage: number;
-  filters: FilterContentProps;
+  filters: SearchFilters;
   shelves: {
     action: VolumeData[];
     adventure: VolumeData[];
@@ -21,22 +21,31 @@ interface BookStore {
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
-  setFilters(filters: Partial<FilterContentProps>): void;
+  setFilters(label: keyof BookStore["filters"], value: unknown): void;
+  resetFilters(): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
 }
 
-const useStore = create<BookStore>()((set) => ({
+const initialState = {
   isLoading: false,
   volumes: [],
   suggestions: [],
   currentVolume: <VolumeData>{},
   currentPage: 1,
-  filters: <FilterContentProps>{},
+  filters: {
+    price: {},
+    availableFormats: [],
+    availableItems: false,
+  },
   shelves: {
     action: [],
     adventure: [],
     fiction: [],
   },
+};
+
+const useStore = create<BookStore>()((set) => ({
+  ...initialState,
 
   setLoading: (loading) => set(() => ({ isLoading: loading })),
 
@@ -48,13 +57,19 @@ const useStore = create<BookStore>()((set) => ({
 
   setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
 
-  setFilters: (filters) =>
+  setFilters: (label, value) =>
     set((state) => ({
       filters: {
         ...state.filters,
-        filters,
+        [label]: value,
       },
     })),
+
+  resetFilters: () => {
+    set(() => ({
+      filters: initialState.filters,
+    }));
+  },
 
   setShelf: (shelf, volumes) =>
     set((state) => ({

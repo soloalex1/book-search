@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Content = styled.div`
+export const Content = styled.form`
   text-align: left;
   background-color: #fff;
   color: #222;

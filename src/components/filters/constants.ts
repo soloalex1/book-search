@@ -1,7 +1,7 @@
 import { FilterContentProps } from "./types";
 
 const filtersWithInitialState: FilterContentProps = {
-  price: {
+  priceLabels: {
     title: "Preço",
     items: [
       {
@@ -40,11 +40,11 @@ const filtersWithInitialState: FilterContentProps = {
       },
     ],
   },
-  availableItems: {
+  availableLabels: {
     title: "Disponível para venda?",
     checked: true,
   },
-  availableFormats: {
+  formatLabels: {
     title: "Formatos disponíveis",
     items: [
       {

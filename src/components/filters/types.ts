@@ -1,18 +1,20 @@
+import { SearchFilters } from "../../types";
+
 export type FilterProps = {
   mainTitle: string;
-  filters: FilterContentProps;
-  dispatch: (filters: Partial<FilterContentProps>) => void;
+  filters: SearchFilters;
+  dispatch: (label: string, value: unknown) => void;
   hasSelectedFilters: boolean;
   resetFilters: () => void;
 };
 
 export type FilterContentProps = {
-  price: PriceFilter;
-  availableItems: AvailableFilter;
-  availableFormats: FormatFilter;
+  priceLabels: PriceFilter;
+  availableLabels: AvailableFilter;
+  formatLabels: FormatFilter;
 };
 
-type PriceFilter = {
+export type PriceFilter = {
   title: string;
   items: {
     id: number;
@@ -25,12 +27,12 @@ type PriceFilter = {
   }[];
 };
 
-type AvailableFilter = {
+export type AvailableFilter = {
   title: string;
   checked: boolean;
 };
 
-type FormatFilter = {
+export type FormatFilter = {
   title: string;
   items: {
     label: string;
