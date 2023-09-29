@@ -16,13 +16,13 @@ const Header: React.FC = () => {
     pagination: { itemsPerPage },
   } = useStore((state) => state);
 
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = Object.fromEntries(new FormData(e.target).entries());
 
-    getVolumes(form.search as string, 0, itemsPerPage).then((data) => {
-      setVolumes(data);
-    });
+    const data = await getVolumes(form.search as string, 0, itemsPerPage);
+
+    if (data) setVolumes(data);
 
     history.push("/search");
   };
