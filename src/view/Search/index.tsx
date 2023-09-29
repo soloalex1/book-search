@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import Filters from "../../components/filters";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import useStore from "../../store";
+import Filters from "@/components/filters";
+import Spinner from "@/components/spinner";
 
+import useStore from "@/store";
+
+import { VolumeInfo } from "@/types";
 import * as S from "./styles";
-import { VolumeInfo } from "../../types";
-import Spinner from "../../components/spinner";
 
 const Search: React.FC = () => {
   const { volumes, setSuggestions, setLoading } = useStore((state) => state);
@@ -24,37 +26,41 @@ const Search: React.FC = () => {
     );
   };
 
+  const hasMoreElements = true;
+
   return (
     <>
       <S.Container>
         <S.Content>
           <Filters />
-          {volumes.length ? (
-            <S.ContentResults>
-              {volumes.map(({ id, volumeInfo }) => (
-                <S.ContentResultsWrapper key={id}>
-                  <S.ContentResultsCover>
-                    <img
-                      src={getVolumeImage(volumeInfo)}
-                      alt={volumeInfo?.title}
-                      loading="lazy"
-                    />
-                  </S.ContentResultsCover>
-                  <S.ContentResultsTitle>
-                    <label>{volumeInfo?.title} </label>
-                  </S.ContentResultsTitle>
-                  <S.ContentResultsCategory>
-                    <span>{volumeInfo?.authors?.join(", ")}</span>
-                  </S.ContentResultsCategory>
-                </S.ContentResultsWrapper>
-              ))}
-            </S.ContentResults>
-          ) : (
-            <>
-              <Spinner />
-              <h2>Carregando...</h2>
-            </>
-          )}
+          <InfiniteScroll
+            dataLength={volumes.length}
+            loader={<Spinner />}
+            next={() => console.log("call next page!")}
+            hasMore={hasMoreElements}
+          >
+            {
+              <S.ContentResults>
+                {volumes.map(({ id, volumeInfo }) => (
+                  <S.ContentResultsWrapper key={id}>
+                    <S.ContentResultsCover>
+                      <img
+                        src={getVolumeImage(volumeInfo)}
+                        alt={volumeInfo?.title}
+                        loading="lazy"
+                      />
+                    </S.ContentResultsCover>
+                    <S.ContentResultsTitle>
+                      <label>{volumeInfo?.title} </label>
+                    </S.ContentResultsTitle>
+                    <S.ContentResultsCategory>
+                      <span>{volumeInfo?.authors?.join(", ")}</span>
+                    </S.ContentResultsCategory>
+                  </S.ContentResultsWrapper>
+                ))}
+              </S.ContentResults>
+            }
+          </InfiniteScroll>
         </S.Content>
       </S.Container>
     </>
