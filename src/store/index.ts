@@ -1,8 +1,10 @@
 import { create } from "zustand";
+import { devtools, persist, createJSONStorage } from "zustand/middleware";
 
 import { SearchFilters, VolumeData, Price, Format } from "../types";
 
 interface BookStore {
+  query: string;
   isLoading: boolean;
   volumes: VolumeData[];
   suggestions: VolumeData[];
@@ -15,7 +17,8 @@ interface BookStore {
     fiction: VolumeData[];
   };
 
-  setLoading(loading: boolean): void;
+  setQuery(query: string): void;
+  setLoading(isLoading: boolean): void;
   setVolumes(volumes: VolumeData[]): void;
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
@@ -28,6 +31,7 @@ interface BookStore {
 }
 
 const initialState = {
+  query: "",
   isLoading: false,
   volumes: [],
   suggestions: [],
@@ -48,62 +52,73 @@ const initialState = {
   },
 };
 
-const useStore = create<BookStore>()((set) => ({
-  ...initialState,
+const useStore = create<BookStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        ...initialState,
 
-  setLoading: (loading) => set(() => ({ isLoading: loading })),
+        setQuery: (query) => set(() => ({ query })),
 
-  setVolumes: (volumes) => set(() => ({ volumes })),
+        setLoading: (isLoading) => set(() => ({ isLoading })),
 
-  setSuggestions: (suggestions) => set(() => ({ suggestions })),
+        setVolumes: (volumes) => set(() => ({ volumes })),
 
-  setCurrentVolume: (currentVolume) => set(() => ({ currentVolume })),
+        setSuggestions: (suggestions) => set(() => ({ suggestions })),
 
-  setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
+        setCurrentVolume: (currentVolume) => set(() => ({ currentVolume })),
 
-  setPriceFilters: (price: Price) =>
-    set((state) => ({
-      filters: {
-        ...state.filters,
-        price: {
-          ...state.filters.price,
-          ...price,
+        setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
+
+        setPriceFilters: (price: Price) =>
+          set((state) => ({
+            filters: {
+              ...state.filters,
+              price: {
+                ...state.filters.price,
+                ...price,
+              },
+            },
+          })),
+
+        setFormatFilters: (label, value) =>
+          set((state) => ({
+            filters: {
+              ...state.filters,
+              availableFormats: {
+                ...state.filters.availableFormats,
+                [label]: value,
+              },
+            },
+          })),
+
+        setAvailabilityFilters: (value) =>
+          set((state) => ({
+            filters: {
+              ...state.filters,
+              availableItems: value,
+            },
+          })),
+
+        resetFilters: () => {
+          set(() => ({
+            filters: initialState.filters,
+          }));
         },
-      },
-    })),
-
-  setFormatFilters: (label, value) =>
-    set((state) => ({
-      filters: {
-        ...state.filters,
-        availableFormats: {
-          ...state.filters.availableFormats,
-          [label]: value,
-        },
-      },
-    })),
-
-  setAvailabilityFilters: (value) =>
-    set((state) => ({
-      filters: {
-        ...state.filters,
-        availableItems: value,
-      },
-    })),
-
-  resetFilters: () => {
-    set(() => ({
-      filters: initialState.filters,
-    }));
-  },
-
-  setShelf: (shelf, volumes) =>
-    set((state) => ({
-      shelves: {
-        ...state.shelves,
-        [shelf]: volumes,
-      },
-    })),
-}));
+        setShelf: (shelf, volumes) =>
+          set((state) => ({
+            shelves: {
+              ...state.shelves,
+              [shelf]: volumes,
+            },
+          })),
+      }),
+      {
+        name: "booksStore",
+        storage: createJSONStorage(() => sessionStorage),
+      }
+    )
+  )
+);
 
 export default useStore;
