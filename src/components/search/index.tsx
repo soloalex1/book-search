@@ -6,8 +6,6 @@ import React, {
   ChangeEvent,
 } from "react";
 
-import Suggestions from "@/components/search/suggestions";
-
 import useStore from "@/store";
 import { getVolumes } from "@/api";
 
@@ -36,6 +34,14 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const onChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setQuery(target.value);
   };
+
+  const renderSuggestions = suggestions.length ? (
+    <S.ListContainer>
+      {suggestions?.map(({ id, volumeInfo }) => (
+        <li key={id}>{volumeInfo.title}</li>
+      ))}
+    </S.ListContainer>
+  ) : null;
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -75,7 +81,7 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
         placeholder="Pesquisar..."
       />
       <S.Icon />
-      {showSuggestions ? <Suggestions data={suggestions} /> : null}
+      {showSuggestions && renderSuggestions}
     </S.SearchContainer>
   );
 };

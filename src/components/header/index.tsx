@@ -18,8 +18,8 @@ const Header: React.FC = () => {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = Object.fromEntries(new FormData(e.target).entries());
 
+    const form = Object.fromEntries(new FormData(e.target).entries());
     const data = await getVolumes(form.search as string, 0, itemsPerPage);
 
     if (data) setVolumes(data);
