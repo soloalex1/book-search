@@ -1,4 +1,4 @@
-import { VolumeData, VolumeQuery, JSONResponse } from "./types";
+import { VolumeQuery, JSONResponse } from "./types";
 
 const ROOT_URL = "https://www.googleapis.com/books/v1";
 
@@ -42,17 +42,4 @@ export const getSubjects = async (subjects: string[]) => {
   });
 
   return Promise.all(allResponses);
-};
-
-export const getVolumeDetails = async (
-  id: number
-): Promise<VolumeData | undefined> => {
-  const response = await fetch(`${ROOT_URL}/volumes/${id}`);
-
-  if (!response.ok) {
-    const errorMessage = await response.text();
-    return Promise.reject(new Error(errorMessage));
-  }
-
-  return await response.json();
 };
