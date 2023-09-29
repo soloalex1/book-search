@@ -13,6 +13,11 @@ export interface VolumeData {
   };
 }
 
+export type VolumeQuery = {
+  totalItems: number;
+  items: VolumeData[];
+};
+
 export type VolumeInfo = {
   title: string;
   subtitle: string;

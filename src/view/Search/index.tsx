@@ -26,7 +26,7 @@ const Search: React.FC = () => {
     );
   };
 
-  const hasMoreElements = true;
+  const hasMoreElements = volumes?.items.length < volumes.totalItems;
 
   return (
     <>
@@ -34,14 +34,14 @@ const Search: React.FC = () => {
         <S.Content>
           <Filters />
           <InfiniteScroll
-            dataLength={volumes.length}
+            dataLength={volumes.totalItems}
             loader={<Spinner />}
             next={() => console.log("call next page!")}
             hasMore={hasMoreElements}
           >
             {
               <S.ContentResults>
-                {volumes.map(({ id, volumeInfo }) => (
+                {volumes.items.map(({ id, volumeInfo }) => (
                   <S.ContentResultsWrapper key={id}>
                     <S.ContentResultsCover>
                       <img
@@ -54,7 +54,7 @@ const Search: React.FC = () => {
                       <label>{volumeInfo?.title} </label>
                     </S.ContentResultsTitle>
                     <S.ContentResultsCategory>
-                      <span>{volumeInfo?.authors?.join(", ")}</span>
+                      <span>{volumeInfo?.authors?.splice(0, -1)}</span>
                     </S.ContentResultsCategory>
                   </S.ContentResultsWrapper>
                 ))}

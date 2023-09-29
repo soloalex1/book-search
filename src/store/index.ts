@@ -1,12 +1,18 @@
 import { create } from "zustand";
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
 
-import { SearchFilters, VolumeData, Price, Format } from "../types";
+import {
+  SearchFilters,
+  VolumeData,
+  VolumeQuery,
+  Price,
+  Format,
+} from "../types";
 
 interface BookStore {
   query: string;
   isLoading: boolean;
-  volumes: VolumeData[];
+  volumes: VolumeQuery;
   suggestions: VolumeData[];
   currentVolume: VolumeData;
   currentPage: number;
@@ -19,7 +25,7 @@ interface BookStore {
 
   setQuery(query: string): void;
   setLoading(isLoading: boolean): void;
-  setVolumes(volumes: VolumeData[]): void;
+  setVolumes(volumes: VolumeQuery): void;
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
@@ -33,7 +39,10 @@ interface BookStore {
 const initialState = {
   query: "",
   isLoading: false,
-  volumes: [],
+  volumes: {
+    totalItems: 0,
+    items: [],
+  },
   suggestions: [],
   currentVolume: <VolumeData>{},
   currentPage: 1,
