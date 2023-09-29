@@ -25,8 +25,6 @@ const Search: React.FC = () => {
     query,
     setQuery,
     setVolumes,
-    setFilteredVolumes,
-    setCurrentPage,
     pagination: { itemsPerPage },
   } = useStore((state) => state);
 
@@ -40,7 +38,6 @@ const Search: React.FC = () => {
 
     if (data) {
       setVolumes(data, true);
-      setFilteredVolumes(data.items);
     }
 
     history.push("/search");
