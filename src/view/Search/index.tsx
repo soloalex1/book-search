@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
 import Filters from "../../components/filters";
-import Footer from "../../components/footer";
-import {
-  footerAllrightsReserved,
-  helpLink,
-  privacyAndPolicy,
-  termsAndUsage,
-} from "../../constants";
 
 import useStore from "../../store";
 
@@ -64,12 +57,6 @@ const Search: React.FC = () => {
           )}
         </S.Content>
       </S.Container>
-      <Footer
-        text={footerAllrightsReserved}
-        privacyText={privacyAndPolicy}
-        termsAndUsageText={termsAndUsage}
-        helpText={helpLink}
-      />
     </>
   );
 };
