@@ -1,4 +1,6 @@
+import { isEqual } from "lodash";
 import { create } from "zustand";
+
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
 
 import {
@@ -9,11 +11,10 @@ import {
   Format,
 } from "../types";
 
-interface BookStore {
+type BookStore = {
   query: string;
   isLoading: boolean;
   volumes: VolumeQuery;
-  filteredVolumes: VolumeData[];
   suggestions: VolumeData[];
   pagination: {
     currentPage: number;
@@ -30,16 +31,17 @@ interface BookStore {
   setQuery(query: string): void;
   setLoading(isLoading: boolean): void;
   setVolumes(volumes: VolumeQuery, resetPage?: boolean): void;
-  setFilteredVolumes(volumes: VolumeData[]): void;
+  getFilteredVolumes(filters: (item: VolumeData) => boolean): VolumeData[];
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentPage(page: number): void;
   setItemsPerPage(items: number): void;
   setPriceFilters(price: Price): void;
   setFormatFilters(label: keyof Format, value: boolean): void;
   setAvailabilityFilters(value: boolean): void;
+  areFiltersEmpty(): boolean;
   resetFilters(): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
-}
+};
 
 const initialState = {
   query: "",
@@ -72,7 +74,7 @@ const initialState = {
 const useStore = create<BookStore>()(
   devtools(
     persist(
-      (set) => ({
+      (set, get) => ({
         ...initialState,
 
         setQuery: (query) => set(() => ({ query })),
@@ -88,8 +90,12 @@ const useStore = create<BookStore>()(
             },
           })),
 
-        setFilteredVolumes: (volumes) =>
-          set(() => ({ filteredVolumes: volumes })),
+        getFilteredVolumes: (filters) =>
+          get().areFiltersEmpty()
+            ? get().volumes.items
+            : get().volumes.items.filter((item) => filters(item)),
+
+        areFiltersEmpty: () => isEqual(get().filters, initialState.filters),
 
         setSuggestions: (suggestions) => set(() => ({ suggestions })),
 
@@ -134,10 +140,12 @@ const useStore = create<BookStore>()(
           })),
 
         resetFilters: () => {
-          set(() => ({
+          set((state) => ({
             filters: initialState.filters,
+            filteredVolumes: state.volumes.items,
           }));
         },
+
         setShelf: (shelf, volumes) =>
           set((state) => ({
             shelves: {
