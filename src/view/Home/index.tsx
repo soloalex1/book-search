@@ -1,24 +1,7 @@
-import Footer from "../../components/footer";
-import Shelves from "../../components/shelves";
-import {
-  footerAllrightsReserved,
-  helpLink,
-  privacyAndPolicy,
-  termsAndUsage,
-} from "../../constants";
+import Shelves from "@/components/shelves";
 
 const Home: React.FC = () => {
-  return (
-    <>
-      <Shelves />
-      <Footer
-        text={footerAllrightsReserved}
-        privacyText={privacyAndPolicy}
-        termsAndUsageText={termsAndUsage}
-        helpText={helpLink}
-      />
-    </>
-  );
+  return <Shelves />;
 };
 
 export default Home;
