@@ -32,6 +32,7 @@ interface BookStore {
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
+  setItemsPerPage(items: number): void;
   setPriceFilters(price: Price): void;
   setFormatFilters(label: keyof Format, value: boolean): void;
   setAvailabilityFilters(value: boolean): void;
@@ -86,6 +87,11 @@ const useStore = create<BookStore>()(
         setCurrentPage: (page: number) =>
           set((state) => ({
             pagination: { ...state.pagination, currentPage: page },
+          })),
+
+        setItemsPerPage: (itemsPerPage: number) =>
+          set((state) => ({
+            pagination: { ...state.pagination, itemsPerPage },
           })),
 
         setPriceFilters: (price: Price) =>

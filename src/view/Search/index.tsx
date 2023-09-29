@@ -14,6 +14,7 @@ const Search: React.FC = () => {
   const {
     query,
     volumes,
+    setVolumes,
     setSuggestions,
     setLoading,
     pagination: { currentPage, itemsPerPage },
@@ -34,11 +35,22 @@ const Search: React.FC = () => {
     );
   };
 
-  const hasMoreElements = volumes.items.length < volumes.totalItems;
+  const hasMoreElements = volumes?.items.length < volumes.totalItems;
 
-  const getMoreVolumes = () => {
+  const getMoreVolumes = async () => {
     setCurrentPage(currentPage + 1);
-    getVolumes(query, currentPage * itemsPerPage, itemsPerPage);
+    const data = await getVolumes(
+      query,
+      currentPage * itemsPerPage,
+      itemsPerPage
+    );
+
+    if (data) {
+      setVolumes({
+        ...data,
+        items: [...volumes.items, ...data.items],
+      });
+    }
   };
 
   return (
