@@ -11,13 +11,16 @@ import * as S from "./styles";
 const Header: React.FC = () => {
   const history = useHistory();
 
-  const { setVolumes } = useStore((state) => state);
+  const {
+    setVolumes,
+    pagination: { itemsPerPage },
+  } = useStore((state) => state);
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = Object.fromEntries(new FormData(e.target).entries());
 
-    getVolumes(form.search as string, 0, 40).then((data) => {
+    getVolumes(form.search as string, 0, itemsPerPage).then((data) => {
       setVolumes(data);
     });
 

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ChangeEvent,
+} from "react";
 
 import Suggestions from "@/components/search/suggestions";
 
@@ -14,41 +20,55 @@ type SearchProps = {
 };
 
 const Search: React.FC<SearchProps> = ({ onSubmit }) => {
-  const { suggestions, setSuggestions } = useStore((state) => state);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef(null);
 
-  const [value, setValue] = useState("");
-  const debounceValue = useDebounce(value);
+  const { suggestions, setSuggestions, query, setQuery } = useStore(
+    (state) => state
+  );
 
-  const handleSearch = useCallback((query: string) => {
-    return getVolumes(query, 0, 40);
+  const debounceValue = useDebounce(query);
+
+  const handleSuggestionSearch = useCallback((term: string) => {
+    return getVolumes(term);
   }, []);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const onChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setQuery(target.value);
   };
 
   useEffect(() => {
-    if (debounceValue) {
-      handleSearch(debounceValue).then((data) => {
-        if (data) {
-          setSuggestions(data);
-          setShowSuggestions(true);
+    const fetchSuggestions = async () => {
+      if (debounceValue) {
+        const { items } = await handleSuggestionSearch(debounceValue);
+
+        if (items) {
+          setSuggestions(items);
+          return;
         }
-        return;
-      });
+      }
+
+      setSuggestions([]);
+    };
+
+    fetchSuggestions();
+  }, [debounceValue, handleSuggestionSearch]);
+
+  useEffect(() => {
+    if (document.activeElement === searchRef.current) {
+      setShowSuggestions(true);
     }
 
-    setSuggestions([]);
     setShowSuggestions(false);
-  }, [debounceValue, handleSearch]);
+  }, [searchRef]);
 
   return (
     <S.SearchContainer onSubmit={onSubmit}>
       <S.InputSearch
+        ref={searchRef}
         name="search"
         type="text"
-        value={value}
+        value={query}
         onChange={onChange}
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setShowSuggestions(false)}

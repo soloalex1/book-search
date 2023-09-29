@@ -15,7 +15,10 @@ interface BookStore {
   volumes: VolumeQuery;
   suggestions: VolumeData[];
   currentVolume: VolumeData;
-  currentPage: number;
+  pagination: {
+    currentPage: number;
+    itemsPerPage: number;
+  };
   filters: SearchFilters;
   shelves: {
     action: VolumeData[];
@@ -45,7 +48,10 @@ const initialState = {
   },
   suggestions: [],
   currentVolume: <VolumeData>{},
-  currentPage: 1,
+  pagination: {
+    currentPage: 1,
+    itemsPerPage: 40,
+  },
   filters: {
     price: {},
     availableFormats: {
@@ -77,7 +83,10 @@ const useStore = create<BookStore>()(
 
         setCurrentVolume: (currentVolume) => set(() => ({ currentVolume })),
 
-        setCurrentPage: (page: number) => set(() => ({ currentPage: page })),
+        setCurrentPage: (page: number) =>
+          set((state) => ({
+            pagination: { ...state.pagination, currentPage: page },
+          })),
 
         setPriceFilters: (price: Price) =>
           set((state) => ({
@@ -124,7 +133,7 @@ const useStore = create<BookStore>()(
       }),
       {
         name: "booksStore",
-        storage: createJSONStorage(() => sessionStorage),
+        storage: createJSONStorage(() => localStorage),
       }
     )
   )
