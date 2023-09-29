@@ -20,10 +20,13 @@ export const ContentTitle = styled.p`
 
 export const Button = styled.button`
   height: 40px;
-  border-radius: 8px;
-  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0.6rem 1.2rem;
   text-transform: uppercase;
   font-weight: 700;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
   background-color: #45d0c1;
   color: white;
   transition: all 0.5s ease-in-out;

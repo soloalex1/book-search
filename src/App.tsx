@@ -6,17 +6,21 @@ import Search from "@/view/Search";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
-import "./App.css";
+import GlobalStyle from "@/globalStyle";
+
 const App = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/search" component={Search} />
-      </Switch>
-      <Footer />
-    </BrowserRouter>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/search" component={Search} />
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 };
 
