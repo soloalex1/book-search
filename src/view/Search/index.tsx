@@ -9,25 +9,22 @@ import Spinner from "@/components/spinner";
 import { getVolumes } from "@/api";
 import useStore from "@/store";
 
-import { VolumeInfo } from "@/types";
+import { VolumeData, VolumeInfo } from "@/types";
 import * as S from "./styles";
+import { inPrice, isAvailable, isForSale } from "@/utils";
 
 const Search: React.FC = () => {
   const {
     query,
     volumes,
     setVolumes,
+    filters,
+    getFilteredVolumes,
     setSuggestions,
     setLoading,
     pagination: { currentPage, itemsPerPage },
     setCurrentPage,
   } = useStore((state) => state);
-
-  useEffect(() => {
-    setSuggestions([]);
-    setLoading(true);
-    setCurrentPage(1);
-  }, []);
 
   const getVolumeImage = (volume: VolumeInfo) => {
     if (!volume.imageLinks) return VolumeImageFallback;
@@ -58,6 +55,22 @@ const Search: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    setSuggestions([]);
+    setLoading(true);
+  }, []);
+
+  const filterHelper = (item: VolumeData) => {
+    const { saleInfo, accessInfo } = item;
+    const { price, availableFormats, availableItems } = filters;
+
+    return (
+      inPrice(saleInfo.retailPrice?.amount, price.min!, price.max!) &&
+      isAvailable(accessInfo, availableFormats) &&
+      isForSale(saleInfo, availableItems)
+    );
+  };
+
   return (
     <>
       <S.Container>
@@ -71,7 +84,7 @@ const Search: React.FC = () => {
           >
             {
               <S.ContentResults>
-                {volumes.items.map(({ id, volumeInfo }) => (
+                {getFilteredVolumes(filterHelper).map(({ id, volumeInfo }) => (
                   <S.ContentResultsWrapper key={id}>
                     <S.ContentResultsCover>
                       <img

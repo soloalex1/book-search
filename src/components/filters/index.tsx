@@ -1,4 +1,4 @@
-import React, { useMemo, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 
 import useStore from "@/store";
 import { Format } from "@/types";
@@ -12,6 +12,7 @@ const Filter: React.FC = () => {
 
   const {
     filters,
+    areFiltersEmpty,
     setAvailabilityFilters,
     setPriceFilters,
     setFormatFilters,
@@ -19,15 +20,6 @@ const Filter: React.FC = () => {
   } = useStore((state) => state);
 
   const { price, availableFormats, availableItems } = filters;
-
-  const hasFilters = useMemo(
-    () =>
-      availableItems ||
-      price.id ||
-      availableFormats.pdf ||
-      availableFormats.epub,
-    [filters]
-  );
 
   const onChangePriceFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const priceMapped = priceLabels.items.find(
@@ -89,7 +81,9 @@ const Filter: React.FC = () => {
   return (
     <S.Content>
       <S.ContentTitle>Filtrar resultados</S.ContentTitle>
-      {hasFilters && <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>}
+      {!areFiltersEmpty() && (
+        <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
+      )}
 
       <S.FilterTitle>{priceLabels.title}</S.FilterTitle>
       {renderPriceFilters}

@@ -4,18 +4,20 @@ export interface VolumeData {
   etag: string;
   selfLink: string;
   volumeInfo: VolumeInfo;
-  saleInfo: {
-    saleability: string;
-  };
-  accessInfo: {
-    epub: Availability;
-    pdf: Availability;
-  };
+  saleInfo: SaleInfo;
+  accessInfo: AccessInfo;
 }
 
 export type VolumeQuery = {
   totalItems: number;
   items: VolumeData[];
+};
+
+export type SaleInfo = {
+  saleability: string;
+  retailPrice: {
+    amount: number;
+  };
 };
 
 export type VolumeInfo = {
@@ -28,7 +30,12 @@ export type VolumeInfo = {
   imageLinks: VolumeImages;
 };
 
-type Availability = {
+export type AccessInfo = {
+  epub: Availability;
+  pdf: Availability;
+};
+
+export type Availability = {
   isAvailable: boolean;
   acsTokenLink?: string;
 };
