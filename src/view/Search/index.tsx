@@ -22,6 +22,8 @@ const Search: React.FC = () => {
     getFilteredVolumes,
     setSuggestions,
     setLoading,
+    hasPriceFilter,
+    hasFormatFilter,
     pagination: { currentPage, itemsPerPage },
     setCurrentPage,
   } = useStore((state) => state);
@@ -64,11 +66,25 @@ const Search: React.FC = () => {
     const { saleInfo, accessInfo } = item;
     const { price, availableFormats, availableItems } = filters;
 
-    return (
-      inPrice(saleInfo.retailPrice?.amount, price.min!, price.max!) &&
-      isAvailable(accessInfo, availableFormats) &&
-      isForSale(saleInfo, availableItems)
-    );
+    let renderElement = true;
+
+    if (hasPriceFilter()) {
+      renderElement = inPrice(
+        saleInfo.retailPrice?.amount,
+        price.min!,
+        price.max!
+      );
+    }
+
+    if (hasFormatFilter()) {
+      renderElement = isAvailable(accessInfo, availableFormats);
+    }
+
+    if (availableItems) {
+      renderElement = isForSale(saleInfo, availableItems);
+    }
+
+    return renderElement;
   };
 
   return (

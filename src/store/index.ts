@@ -38,6 +38,8 @@ type BookStore = {
   setPriceFilters(price: Price): void;
   setFormatFilters(label: keyof Format, value: boolean): void;
   setAvailabilityFilters(value: boolean): void;
+  hasPriceFilter(): boolean;
+  hasFormatFilter(): boolean;
   areFiltersEmpty(): boolean;
   resetFilters(): void;
   setShelf(shelf: keyof BookStore["shelves"], volumes: VolumeData[]): void;
@@ -94,6 +96,15 @@ const useStore = create<BookStore>()(
           get().areFiltersEmpty()
             ? get().volumes.items
             : get().volumes.items.filter((item) => filters(item)),
+
+        hasPriceFilter: () =>
+          !isEqual(get().filters.price, initialState.filters.price),
+
+        hasFormatFilter: () =>
+          !isEqual(
+            get().filters.availableFormats,
+            initialState.filters.availableFormats
+          ),
 
         areFiltersEmpty: () => isEqual(get().filters, initialState.filters),
 
