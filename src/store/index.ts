@@ -13,13 +13,14 @@ interface BookStore {
   query: string;
   isLoading: boolean;
   volumes: VolumeQuery;
+  filteredVolumes: VolumeData[];
   suggestions: VolumeData[];
-  currentVolume: VolumeData;
   pagination: {
     currentPage: number;
     itemsPerPage: number;
   };
   filters: SearchFilters;
+
   shelves: {
     action: VolumeData[];
     adventure: VolumeData[];
@@ -29,8 +30,8 @@ interface BookStore {
   setQuery(query: string): void;
   setLoading(isLoading: boolean): void;
   setVolumes(volumes: VolumeQuery): void;
+  setFilteredVolumes(volumes: VolumeData[]): void;
   setSuggestions(suggestions: VolumeData[]): void;
-  setCurrentVolume(volume: VolumeData): void;
   setCurrentPage(page: number): void;
   setItemsPerPage(items: number): void;
   setPriceFilters(price: Price): void;
@@ -47,8 +48,8 @@ const initialState = {
     totalItems: 0,
     items: [],
   },
+  filteredVolumes: [],
   suggestions: [],
-  currentVolume: <VolumeData>{},
   pagination: {
     currentPage: 1,
     itemsPerPage: 40,
@@ -80,9 +81,10 @@ const useStore = create<BookStore>()(
 
         setVolumes: (volumes) => set(() => ({ volumes })),
 
-        setSuggestions: (suggestions) => set(() => ({ suggestions })),
+        setFilteredVolumes: (volumes) =>
+          set(() => ({ filteredVolumes: volumes })),
 
-        setCurrentVolume: (currentVolume) => set(() => ({ currentVolume })),
+        setSuggestions: (suggestions) => set(() => ({ suggestions })),
 
         setCurrentPage: (page: number) =>
           set((state) => ({
