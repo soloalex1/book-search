@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     e.preventDefault();
     const form = Object.fromEntries(new FormData(e.target).entries());
 
-    getVolumes(form.search as string).then((data) => {
+    getVolumes(form.search as string, 0, 40).then((data) => {
       setVolumes(data);
     });
 
