@@ -6,12 +6,12 @@ import VolumeImageFallback from "@/assets/capa-fallback.svg";
 import Filters from "@/components/filters";
 import Spinner from "@/components/spinner";
 
+import { inPrice, isAvailable, isForSale } from "@/utils";
 import { getVolumes } from "@/api";
 import useStore from "@/store";
 
 import { VolumeData, VolumeInfo } from "@/types";
 import * as S from "./styles";
-import { inPrice, isAvailable, isForSale } from "@/utils";
 
 const Search: React.FC = () => {
   const {
