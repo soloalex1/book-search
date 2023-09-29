@@ -29,7 +29,7 @@ interface BookStore {
 
   setQuery(query: string): void;
   setLoading(isLoading: boolean): void;
-  setVolumes(volumes: VolumeQuery): void;
+  setVolumes(volumes: VolumeQuery, resetPage?: boolean): void;
   setFilteredVolumes(volumes: VolumeData[]): void;
   setSuggestions(suggestions: VolumeData[]): void;
   setCurrentPage(page: number): void;
@@ -79,7 +79,14 @@ const useStore = create<BookStore>()(
 
         setLoading: (isLoading) => set(() => ({ isLoading })),
 
-        setVolumes: (volumes) => set(() => ({ volumes })),
+        setVolumes: (volumes, resetPage = false) =>
+          set((state) => ({
+            volumes,
+            pagination: {
+              ...state.pagination,
+              currentPage: resetPage ? 1 : state.pagination.currentPage,
+            },
+          })),
 
         setFilteredVolumes: (volumes) =>
           set(() => ({ filteredVolumes: volumes })),
@@ -142,6 +149,7 @@ const useStore = create<BookStore>()(
       {
         name: "booksStore",
         storage: createJSONStorage(() => localStorage),
+        partialize: (state) => ({ query: state.query, shelves: state.shelves }),
       }
     )
   )
