@@ -13,12 +13,16 @@ const GlobalStyle = createGlobalStyle`
     -webkit-text-size-adjust: 100%;
   }
 
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   #root {
-    padding: 2rem;
     text-align: center;
     width: 100%;
     height: 100%;
-    margin: 0 auto;
   }
 `;
 
