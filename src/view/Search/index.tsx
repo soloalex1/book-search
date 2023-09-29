@@ -26,6 +26,7 @@ const Search: React.FC = () => {
   useEffect(() => {
     setSuggestions([]);
     setLoading(true);
+    setCurrentPage(1);
   }, []);
 
   const getVolumeImage = (volume: VolumeInfo) => {
