@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import VolumeImageFallback from "@/assets/capa-fallback.svg";
+
 import Filters from "@/components/filters";
 import Spinner from "@/components/spinner";
 
@@ -26,13 +28,15 @@ const Search: React.FC = () => {
     setLoading(true);
   }, []);
 
-  const getVolumeImage = (volumeInfo: VolumeInfo) => {
-    if (!volumeInfo) return;
+  const getVolumeImage = (volume: VolumeInfo) => {
+    if (!volume.imageLinks) return VolumeImageFallback;
 
-    return (
-      volumeInfo?.imageLinks?.thumbnail ||
-      volumeInfo?.imageLinks?.smallThumbnail
-    );
+    if (volume?.imageLinks.thumbnail) return volume?.imageLinks.thumbnail;
+
+    if (volume?.imageLinks.smallThumbnail)
+      return volume?.imageLinks.smallThumbnail;
+
+    return VolumeImageFallback;
   };
 
   const hasMoreElements = volumes?.items.length < volumes.totalItems;
