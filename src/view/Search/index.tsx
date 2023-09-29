@@ -4,13 +4,21 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "@/components/filters";
 import Spinner from "@/components/spinner";
 
+import { getVolumes } from "@/api";
 import useStore from "@/store";
 
 import { VolumeInfo } from "@/types";
 import * as S from "./styles";
 
 const Search: React.FC = () => {
-  const { volumes, setSuggestions, setLoading } = useStore((state) => state);
+  const {
+    query,
+    volumes,
+    setSuggestions,
+    setLoading,
+    pagination: { currentPage, itemsPerPage },
+    setCurrentPage,
+  } = useStore((state) => state);
 
   useEffect(() => {
     setSuggestions([]);
@@ -26,7 +34,12 @@ const Search: React.FC = () => {
     );
   };
 
-  const hasMoreElements = volumes?.items.length < volumes.totalItems;
+  const hasMoreElements = volumes.items.length < volumes.totalItems;
+
+  const getMoreVolumes = () => {
+    setCurrentPage(currentPage + 1);
+    getVolumes(query, currentPage * itemsPerPage, itemsPerPage);
+  };
 
   return (
     <>
@@ -36,7 +49,7 @@ const Search: React.FC = () => {
           <InfiniteScroll
             dataLength={volumes.totalItems}
             loader={<Spinner />}
-            next={() => console.log("call next page!")}
+            next={getMoreVolumes}
             hasMore={hasMoreElements}
           >
             {
