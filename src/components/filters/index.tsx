@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, MouseEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 
 import useStore from "@/store";
 import { Format } from "@/types";
@@ -8,7 +8,7 @@ import * as S from "./styles";
 import { SidePane } from "react-side-pane";
 
 const Filter: React.FC = () => {
-  const [visible, setVisible] = useState(window.innerWidth > 768);
+  const [visible, setVisible] = useState(false);
 
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
@@ -81,21 +81,30 @@ const Filter: React.FC = () => {
     </S.FilterContent>
   );
 
+  const renderFilterWrapper = (Component: JSX.Element): JSX.Element => {
+    if (window.innerWidth > 768) {
+      return Component;
+    }
+
+    return (
+      <SidePane open={visible} width={50} onClose={() => setVisible(false)}>
+        {Component}
+      </SidePane>
+    );
+  };
+
   return (
     <>
       <S.ButtonContainer>
-        <S.Button id="filterToggle" onClick={() => setVisible(true)}>
-          Filtrar resultados
-        </S.Button>
+        <S.Button onClick={() => setVisible(true)}>Filtrar resultados</S.Button>
       </S.ButtonContainer>
-      <SidePane open={visible} width={50} onClose={() => setVisible(false)}>
+      {renderFilterWrapper(
         <S.FiltersContainer>
           <S.ContentTitle>Filtrar resultados</S.ContentTitle>
+
           {!areFiltersEmpty() && (
             <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
           )}
-
-          {/* <button onClick={closeFilters}>X</button> */}
 
           <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
           {renderPriceFilters}
@@ -118,7 +127,7 @@ const Filter: React.FC = () => {
             </label>
           </S.FilterContent>
         </S.FiltersContainer>
-      </SidePane>
+      )}
     </>
   );
 };

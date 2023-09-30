@@ -4,6 +4,10 @@ import styled from "styled-components";
 export const ButtonContainer = styled.div`
   justify-self: flex-end;
   margin: 0.5rem 1rem;
+
+  @media (min-width: ${breakpoints.desktopMD}) {
+    display: none;
+  }
 `;
 
 export const FiltersContainer = styled.form`
@@ -45,12 +49,6 @@ export const Button = styled.button`
   &:hover {
     border-color: transparent;
     background-color: #37a69a;
-  }
-
-  @media (min-width: ${breakpoints.desktopMD}) {
-    &#filterToggle {
-      display: none;
-    }
   }
 `;
 
