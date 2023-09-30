@@ -87,42 +87,40 @@ const Search: React.FC = () => {
     return renderElement;
   };
 
+  const getVolumeAuthor = (volume: VolumeInfo) => {
+    if (volume.authors && volume.authors.length) {
+      return volume.authors[0];
+    }
+
+    return "Autor desconhecido";
+  };
+
   return (
-    <>
-      <S.Container>
-        <S.Content>
-          <Filters />
-          <InfiniteScroll
-            dataLength={volumes.totalItems}
-            loader={<Spinner />}
-            next={getMoreVolumes}
-            hasMore={hasMoreElements}
-          >
-            {
-              <S.ContentResults>
-                {getFilteredVolumes(filterHelper).map(({ id, volumeInfo }) => (
-                  <S.ContentResultsWrapper key={id}>
-                    <S.ContentResultsCover>
-                      <img
-                        src={getVolumeImage(volumeInfo)}
-                        alt={volumeInfo?.title}
-                        loading="lazy"
-                      />
-                    </S.ContentResultsCover>
-                    <S.ContentResultsTitle>
-                      <label>{volumeInfo?.title} </label>
-                    </S.ContentResultsTitle>
-                    <S.ContentResultsCategory>
-                      <span>{volumeInfo?.authors?.splice(0, -1)}</span>
-                    </S.ContentResultsCategory>
-                  </S.ContentResultsWrapper>
-                ))}
-              </S.ContentResults>
-            }
-          </InfiniteScroll>
-        </S.Content>
-      </S.Container>
-    </>
+    <S.SearchContainer>
+      <Filters />
+      <InfiniteScroll
+        dataLength={volumes.totalItems}
+        loader={<Spinner />}
+        next={getMoreVolumes}
+        hasMore={hasMoreElements}
+      >
+        {
+          <S.ResultsContainer>
+            {getFilteredVolumes(filterHelper).map(({ volumeInfo }, index) => (
+              <S.VolumeWrapper key={index}>
+                <S.VolumeImage
+                  src={getVolumeImage(volumeInfo)}
+                  alt={volumeInfo?.title}
+                  loading="lazy"
+                />
+                <S.VolumeTitle>{volumeInfo?.title}</S.VolumeTitle>
+                <S.VolumeAuthor>{getVolumeAuthor(volumeInfo)}</S.VolumeAuthor>
+              </S.VolumeWrapper>
+            ))}
+          </S.ResultsContainer>
+        }
+      </InfiniteScroll>
+    </S.SearchContainer>
   );
 };
 

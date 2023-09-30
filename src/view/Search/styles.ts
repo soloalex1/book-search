@@ -1,44 +1,60 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
-`;
+import { breakpoints } from "@/constants";
 
-export const Content = styled.div`
+export const SearchContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr;
+
+  @media (min-width: ${breakpoints.desktopMD}) {
+    grid-template-columns: 2fr 6fr;
+  }
 `;
 
-export const ContentResults = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-  margin: 49px 0;
+export const ResultsContainer = styled.section`
   width: 100%;
-`;
+  margin: 1rem 0;
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(3, 1fr);
 
-export const ContentResultsWrapper = styled.div`
-  margin: 10px 0;
-`;
+  @media (min-width: ${breakpoints.tabletSM}) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
-export const ContentResultsCover = styled.div`
-  img {
-    width: 124px;
-    height: 185px;
+  @media (min-width: ${breakpoints.desktopMD}) {
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 
-export const ContentResultsTitle = styled.div`
-  label {
-    font-size: 14px;
-    color: #86878b;
-  }
+export const VolumeWrapper = styled.div`
+  margin: 0.75rem 0;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
 `;
 
-export const ContentResultsCategory = styled.div`
-  span {
-    font-size: 14px;
-    color: #9eaeb7;
-  }
+export const VolumeImage = styled.img`
+  width: 124px;
+  height: 185px;
+  margin-bottom: 0.5rem;
+`;
+
+export const VolumeTitle = styled.label`
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #86878b;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  white-space: pre-wrap;
+  overflow: hidden;
+`;
+
+export const VolumeAuthor = styled.label`
+  font-size: 0.75rem;
+  color: #9eaeb7;
 `;

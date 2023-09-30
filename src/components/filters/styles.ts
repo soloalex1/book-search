@@ -12,6 +12,8 @@ export const FiltersContainer = styled.form`
   transition: 500ms;
 
   @media (min-width: ${breakpoints.desktopMD}) {
+    width: initial;
+    position: static;
     display: block;
     padding: 0;
     margin: 0 auto;
