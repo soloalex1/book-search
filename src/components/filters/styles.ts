@@ -1,3 +1,4 @@
+import { breakpoints } from "@/constants";
 import styled from "styled-components";
 
 export const Content = styled.form`
@@ -6,7 +7,7 @@ export const Content = styled.form`
   color: #222;
   width: 100%;
 
-  @media (min-width: 992px) {
+  @media (min-width: ${breakpoints.desktopMD}) {
     padding: 0;
     margin: 0 auto;
   }
