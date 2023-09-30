@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "@/assets/search-icon.svg";
+import { breakpoints } from "@/constants";
 
 export const SearchContainer = styled.form`
   position: relative;
@@ -37,24 +38,32 @@ export const Icon = styled(SearchIcon)`
 `;
 
 export const ListContainer = styled.ul`
-  width: 100%;
+  width: 90vw;
   position: absolute;
   top: 40px;
-  background-color: white;
+  right: 0;
+  background-color: #fff;
   list-style-type: none;
-  padding: 12px;
+  padding: 0.75rem;
   z-index: 20;
-  border-radius: 8px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 12px 16px 0px rgba(135, 130, 135, 0.5);
 
   li {
     color: black;
-    padding: 8px;
+    padding: 0.5rem;
     background-color: transparent;
     transition: all 100ms ease-in-out;
     text-align: left;
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: #45d0c169;
     }
+  }
+
+  @media (min-width: ${breakpoints.tabletSM}) {
+    width: 100%;
+    left: 0;
   }
 `;
