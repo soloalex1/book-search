@@ -8,7 +8,7 @@ export const SearchContainer = styled.div`
   grid-template-columns: 1fr;
 
   @media (min-width: ${breakpoints.desktopMD}) {
-    grid-template-columns: 2fr 6fr;
+    grid-template-columns: 6fr 2fr;
   }
 `;
 

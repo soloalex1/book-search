@@ -97,7 +97,6 @@ const Search: React.FC = () => {
 
   return (
     <S.SearchContainer>
-      <Filters />
       <InfiniteScroll
         dataLength={volumes.totalItems}
         loader={<Spinner />}
@@ -120,6 +119,7 @@ const Search: React.FC = () => {
           </S.ResultsContainer>
         }
       </InfiniteScroll>
+      <Filters />
     </S.SearchContainer>
   );
 };
