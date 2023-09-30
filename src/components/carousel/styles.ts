@@ -1,15 +1,15 @@
-import styled from 'styled-components'
+import { breakpoints } from "@/constants";
+import styled from "styled-components";
 
 export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
   margin: 0px;
 
   .slick-slider {
     position: relative;
-    width: auto!important;
+    width: auto !important;
     display: block;
-    box-sizing: border-box;
     margin: 0 auto;
-    
+
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -21,8 +21,8 @@ export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 
-    @media (min-width: 992px) {
-        width: 68.4%!important;
+    @media (min-width: ${breakpoints.desktopMD}) {
+      width: 75% !important;
     }
   }
 
@@ -56,21 +56,23 @@ export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
     top: 0;
     left: 0;
     display: flex;
-
     padding: 10px 0 10px 0;
-    @media (min-width: 768px) {
+
+    @media (min-width: ${breakpoints.tabletSM}) {
       padding-left: 8px;
     }
   }
+
   .slick-track:before,
   .slick-track:after {
     display: table;
-
-    content: '';
+    content: "";
   }
+
   .slick-track:after {
     clear: both;
   }
+
   .slick-loading .slick-track {
     visibility: hidden;
   }
@@ -78,37 +80,42 @@ export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
   .slick-slide {
     display: none;
     float: left;
-
     height: 100%;
     min-height: 1px;
     margin-right: ${({ spaceBetweenItems }) =>
       spaceBetweenItems ? spaceBetweenItems : 0};
   }
-  [dir='rtl'] .slick-slide {
+
+  [dir="rtl"] .slick-slide {
     float: right;
   }
+
   .slick-slide img {
     display: block;
   }
+
   .slick-slide.slick-loading img {
     display: none;
   }
+
   .slick-slide.dragging img {
     pointer-events: none;
   }
+
   .slick-initialized .slick-slide {
     display: block;
   }
+
   .slick-loading .slick-slide {
     visibility: hidden;
   }
+
   .slick-vertical .slick-slide {
     display: block;
-
     height: auto;
-
     border: 1px solid transparent;
   }
+
   .slick-arrow.slick-hidden {
     display: none;
   }
@@ -116,7 +123,7 @@ export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
   .slick-disabled {
     display: none !important;
   }
-`
+`;
 
 const ArrowSlick = styled.div`
   background-color: #fff;
@@ -136,11 +143,11 @@ const ArrowSlick = styled.div`
   cursor: pointer;
   right: -18px;
 
-  @media (max-width: 480px) {
+  @media (max-width: ${breakpoints.tabletSM}) {
     display: none !important;
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: ${breakpoints.desktopMD}) {
     .slick-disabled {
       display: none !important;
     }
@@ -149,13 +156,12 @@ const ArrowSlick = styled.div`
   &.slick-hidden {
     display: none;
   }
-`
-
+`;
 
 export const ArrowNext = styled(ArrowSlick)`
   right: 26px;
-`
+`;
 
-export const ArrowPrev= styled(ArrowSlick)`
+export const ArrowPrev = styled(ArrowSlick)`
   left: 26px;
-`
+`;
