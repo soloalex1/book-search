@@ -17,10 +17,6 @@ export const Shelf = styled.div`
   padding: 0 0.5rem;
 `;
 
-export const ContentList = styled.div`
-  width: 100%;
-`;
-
 export const Content = styled.div`
   width: 100%;
 
@@ -29,7 +25,7 @@ export const Content = styled.div`
   }
 `;
 
-export const ContentItem = styled.div`
+export const ShelfItem = styled.div`
   display: flex;
   width: calc(100% - 80px);
 
@@ -44,7 +40,7 @@ export const ContentItem = styled.div`
   }
 `;
 
-export const TitleCategory = styled.div`
+export const ShelfTitle = styled.div`
   color: #053b4b;
   font-size: 2rem;
   font-weight: 700;

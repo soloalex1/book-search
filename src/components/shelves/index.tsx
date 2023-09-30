@@ -36,24 +36,22 @@ const Shelves: React.FC = () => {
   const renderShelf = (shelfName: string, shelf: VolumeData[]) => {
     return (
       <S.Shelf>
-        <S.ContentList>
-          <S.TitleCategory>{shelfName}</S.TitleCategory>
-          <S.Content>
-            <Carousel settings={settings} spaceBetweenItems="16px">
-              {shelf.map(({ id, volumeInfo }) => (
-                <S.ContentItem key={id}>
-                  <img
-                    aria-label={volumeInfo.title}
-                    src={renderVolumeImage(volumeInfo)}
-                    alt={volumeInfo.title}
-                    loading="lazy"
-                    title={volumeInfo.title}
-                  />
-                </S.ContentItem>
-              ))}
-            </Carousel>
-          </S.Content>
-        </S.ContentList>
+        <S.ShelfTitle>{shelfName}</S.ShelfTitle>
+        <S.Content>
+          <Carousel settings={settings} spaceBetweenItems="16px">
+            {shelf.map(({ id, volumeInfo }) => (
+              <S.ShelfItem key={id}>
+                <img
+                  aria-label={volumeInfo.title}
+                  src={renderVolumeImage(volumeInfo)}
+                  alt={volumeInfo.title}
+                  loading="lazy"
+                  title={volumeInfo.title}
+                />
+              </S.ShelfItem>
+            ))}
+          </Carousel>
+        </S.Content>
       </S.Shelf>
     );
   };
