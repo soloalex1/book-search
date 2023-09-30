@@ -1,10 +1,15 @@
 import { breakpoints } from "@/constants";
 import styled from "styled-components";
 
+export const ButtonContainer = styled.div`
+  justify-self: flex-end;
+  margin: 0.5rem 1rem;
+`;
+
 export const FiltersContainer = styled.form`
   height: 100vh;
   background-color: #fff;
-  padding-top: 3rem;
+  padding: 1.5rem;
   color: #222;
 
   @media (min-width: ${breakpoints.desktopMD}) {
@@ -13,6 +18,7 @@ export const FiltersContainer = styled.form`
     display: block;
     padding: 0;
     margin: 0 auto;
+    padding: 3rem;
   }
 `;
 

@@ -37,8 +37,8 @@ const filtersWithInitialState: FilterContentProps = {
     ],
   },
   availableLabels: {
-    title: "Somente volumes disponíveis",
-    checked: true,
+    title: "Disponibilidade",
+    description: "Somente volumes disponíveis",
   },
   formatLabels: {
     title: "Formatos disponíveis",

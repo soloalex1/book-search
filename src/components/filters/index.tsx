@@ -10,11 +10,6 @@ import { SidePane } from "react-side-pane";
 const Filter: React.FC = () => {
   const [visible, setVisible] = useState(window.innerWidth > 768);
 
-  const closeFilters = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setVisible(!visible);
-  };
-
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
 
@@ -88,9 +83,11 @@ const Filter: React.FC = () => {
 
   return (
     <>
-      <S.Button id="filterToggle" onClick={() => setVisible(true)}>
-        Filtrar resultados
-      </S.Button>
+      <S.ButtonContainer>
+        <S.Button id="filterToggle" onClick={() => setVisible(true)}>
+          Filtrar resultados
+        </S.Button>
+      </S.ButtonContainer>
       <SidePane open={visible} width={50} onClose={() => setVisible(false)}>
         <S.FiltersContainer>
           <S.ContentTitle>Filtrar resultados</S.ContentTitle>
@@ -98,7 +95,7 @@ const Filter: React.FC = () => {
             <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
           )}
 
-          <button onClick={closeFilters}>X</button>
+          {/* <button onClick={closeFilters}>X</button> */}
 
           <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
           {renderPriceFilters}
@@ -106,6 +103,7 @@ const Filter: React.FC = () => {
           <S.FilterLabel>{formatLabels.title}</S.FilterLabel>
           {renderFormatFilters}
 
+          <S.FilterLabel>{availableLabels.title}</S.FilterLabel>
           <S.FilterContent>
             <input
               type="checkbox"
@@ -114,7 +112,10 @@ const Filter: React.FC = () => {
               checked={availableItems}
               onChange={onChangeAvailabilityFilter}
             />
-            <label htmlFor="availableItems">{availableLabels.title}</label>
+
+            <label htmlFor="availableItems">
+              {availableLabels.description}
+            </label>
           </S.FilterContent>
         </S.FiltersContainer>
       </SidePane>

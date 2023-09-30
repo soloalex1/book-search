@@ -18,7 +18,7 @@ export type PriceFilter = {
 
 export type AvailableFilter = {
   title: string;
-  checked: boolean;
+  description: string;
 };
 
 export type FormatFilter = {
