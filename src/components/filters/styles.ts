@@ -2,14 +2,10 @@ import { breakpoints } from "@/constants";
 import styled from "styled-components";
 
 export const FiltersContainer = styled.form`
-  text-align: left;
+  height: 100vh;
   background-color: #fff;
+  padding-top: 3rem;
   color: #222;
-  width: 100%;
-  position: fixed;
-  z-index: 20;
-  display: none;
-  transition: 500ms;
 
   @media (min-width: ${breakpoints.desktopMD}) {
     width: initial;
@@ -27,6 +23,7 @@ export const ContentTitle = styled.p`
 `;
 
 export const Button = styled.button`
+  width: fit-content;
   height: 2.5rem;
   border: 1px solid transparent;
   padding: 0.6rem 1.2rem;
@@ -37,11 +34,17 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: #45d0c1;
   color: white;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.5s linear;
 
   &:hover {
     border-color: transparent;
     background-color: #37a69a;
+  }
+
+  @media (min-width: ${breakpoints.desktopMD}) {
+    &#filterToggle {
+      display: none;
+    }
   }
 `;
 

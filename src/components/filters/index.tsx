@@ -1,12 +1,20 @@
-import React, { ChangeEvent } from "react";
+import React, { useState, ChangeEvent, MouseEvent } from "react";
 
 import useStore from "@/store";
 import { Format } from "@/types";
 
 import filtersWithInitialState from "./constants";
 import * as S from "./styles";
+import { SidePane } from "react-side-pane";
 
 const Filter: React.FC = () => {
+  const [visible, setVisible] = useState(window.innerWidth > 768);
+
+  const closeFilters = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setVisible(!visible);
+  };
+
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
 
@@ -79,29 +87,38 @@ const Filter: React.FC = () => {
   );
 
   return (
-    <S.FiltersContainer>
-      <S.ContentTitle>Filtrar resultados</S.ContentTitle>
-      {!areFiltersEmpty() && (
-        <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
-      )}
+    <>
+      <S.Button id="filterToggle" onClick={() => setVisible(true)}>
+        Filtrar resultados
+      </S.Button>
+      <SidePane open={visible} width={50} onClose={() => setVisible(false)}>
+        <S.FiltersContainer>
+          <S.ContentTitle>Filtrar resultados</S.ContentTitle>
+          {!areFiltersEmpty() && (
+            <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
+          )}
 
-      <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
-      {renderPriceFilters}
+          <button onClick={closeFilters}>X</button>
 
-      <S.FilterLabel>{formatLabels.title}</S.FilterLabel>
-      {renderFormatFilters}
+          <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
+          {renderPriceFilters}
 
-      <S.FilterContent>
-        <input
-          type="checkbox"
-          id="availableItems"
-          name="availableItems"
-          checked={availableItems}
-          onChange={onChangeAvailabilityFilter}
-        />
-        <label htmlFor="availableItems">{availableLabels.title}</label>
-      </S.FilterContent>
-    </S.FiltersContainer>
+          <S.FilterLabel>{formatLabels.title}</S.FilterLabel>
+          {renderFormatFilters}
+
+          <S.FilterContent>
+            <input
+              type="checkbox"
+              id="availableItems"
+              name="availableItems"
+              checked={availableItems}
+              onChange={onChangeAvailabilityFilter}
+            />
+            <label htmlFor="availableItems">{availableLabels.title}</label>
+          </S.FilterContent>
+        </S.FiltersContainer>
+      </SidePane>
+    </>
   );
 };
 
