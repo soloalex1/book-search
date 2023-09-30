@@ -79,16 +79,16 @@ const Filter: React.FC = () => {
   );
 
   return (
-    <S.Content>
+    <S.FiltersContainer>
       <S.ContentTitle>Filtrar resultados</S.ContentTitle>
       {!areFiltersEmpty() && (
         <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
       )}
 
-      <S.FilterTitle>{priceLabels.title}</S.FilterTitle>
+      <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
       {renderPriceFilters}
 
-      <S.FilterTitle>{formatLabels.title}</S.FilterTitle>
+      <S.FilterLabel>{formatLabels.title}</S.FilterLabel>
       {renderFormatFilters}
 
       <S.FilterContent>
@@ -101,7 +101,7 @@ const Filter: React.FC = () => {
         />
         <label htmlFor="availableItems">{availableLabels.title}</label>
       </S.FilterContent>
-    </S.Content>
+    </S.FiltersContainer>
   );
 };
 

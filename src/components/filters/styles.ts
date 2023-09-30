@@ -1,13 +1,18 @@
 import { breakpoints } from "@/constants";
 import styled from "styled-components";
 
-export const Content = styled.form`
+export const FiltersContainer = styled.form`
   text-align: left;
   background-color: #fff;
   color: #222;
   width: 100%;
+  position: fixed;
+  z-index: 20;
+  display: none;
+  transition: 500ms;
 
   @media (min-width: ${breakpoints.desktopMD}) {
+    display: block;
     padding: 0;
     margin: 0 auto;
   }
@@ -15,12 +20,12 @@ export const Content = styled.form`
 
 export const ContentTitle = styled.p`
   color: #222;
-  font-size: 24px;
+  font-size: 1.75rem;
   font-weight: 700;
 `;
 
 export const Button = styled.button`
-  height: 40px;
+  height: 2.5rem;
   border: 1px solid transparent;
   padding: 0.6rem 1.2rem;
   text-transform: uppercase;
@@ -38,22 +43,24 @@ export const Button = styled.button`
   }
 `;
 
-export const FilterTitle = styled.p`
+export const FilterLabel = styled.p`
   color: black;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 `;
 
 export const FilterContent = styled.div`
-  & > ul {
+  > ul {
     list-style-type: none;
     padding: 0;
-    margin-bottom: 8px;
-  }
-  & > ul > li {
-    margin-bottom: 3px;
-  }
-  & > ul > li > span {
-    color: #222;
+    margin-bottom: 0.5rem;
+
+    > li {
+      margin-bottom: 0.25rem;
+
+      > span {
+        color: #222;
+      }
+    }
   }
 `;
