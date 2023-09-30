@@ -2,34 +2,29 @@ import React from "react";
 
 import * as S from "./styles";
 
-import {
-  footerAllrightsReserved,
-  helpLink,
-  privacyAndPolicy,
-  termsAndUsage,
-} from "@/constants";
-
 const Footer: React.FC = () => {
   return (
     <S.Container>
       <S.Content>
-        <S.ContentText>{footerAllrightsReserved}</S.ContentText>
+        <S.ContentText>
+          Copyright © 2023 Árvore. Todos os direitos reservados.
+        </S.ContentText>
       </S.Content>
       <S.Content>
         <S.ContentList>
           <S.ContentItem>
             <S.ContentLink href="https://www.arvore.com.br/arvore-politica-de-privacidade-completo">
-              {privacyAndPolicy}
+              Política e privacidade
             </S.ContentLink>
           </S.ContentItem>
           <S.ContentItem>
             <S.ContentLink href="https://s3-sa-east-1.amazonaws.com/files.arvoredelivros.com.br/Contrato/Termos_de_uso_e_contratacao_Arvore.pdf">
-              {termsAndUsage}
+              Termos de uso
             </S.ContentLink>
           </S.ContentItem>
           <S.ContentItem>
             <S.ContentLink href="https://central.arvore.com.br/central/estudante?utm_source=plataforma&utm_medium=referral&utm_content=rodape_ajuda_estudante&utm_campaign=central_2023">
-              {helpLink}
+              Ajuda
             </S.ContentLink>
           </S.ContentItem>
         </S.ContentList>
