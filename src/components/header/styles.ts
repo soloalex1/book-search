@@ -23,13 +23,6 @@ export const ContentSearch = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 2;
-
-  @media (min-width: ${breakpoints.desktopMD}) {
-    width: 70%;
-    margin: 0;
-    padding-right: 0;
-    flex-grow: 1;
-  }
 `;
 
 export const ContentUser = styled.div`
@@ -37,6 +30,7 @@ export const ContentUser = styled.div`
 
   @media (min-width: ${breakpoints.desktopMD}) {
     display: block;
+    color: #fff;
     flex-grow: 1;
   }
 `;
