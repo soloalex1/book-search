@@ -20,17 +20,13 @@ export const SliderWrapper = styled.div<{ spaceBetweenItems?: string }>`
     -ms-touch-action: pan-y;
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
-
-    @media (min-width: ${breakpoints.desktopMD}) {
-      width: 75% !important;
-    }
   }
 
   .slick-list {
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: 0 0 16px 0;
+    padding: 0 0 1rem 0;
   }
 
   .slick-list:focus {

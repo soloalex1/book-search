@@ -14,14 +14,18 @@ export const ShelfContainer = styled.div`
 
 export const Shelf = styled.div`
   width: 100%;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
+
+  @media (min-width: ${breakpoints.tabletSM}) {
+    padding: 0 3rem;
+  }
 `;
 
 export const Content = styled.div`
   width: 100%;
 
   @media (min-width: ${breakpoints.desktopXL}) {
-    margin: 20px auto;
+    margin: 1.25rem auto;
   }
 `;
 
@@ -30,23 +34,28 @@ export const ShelfItem = styled.div`
   width: calc(100% - 80px);
 
   > img {
-    width: 198px;
-    height: 296px;
+    width: 200px;
+    height: 300px;
   }
 
   @media (min-width: ${breakpoints.tabletSM}) {
     width: 100%;
-    margin: 20px auto;
+    margin: 1.25rem auto;
   }
 `;
 
 export const ShelfTitle = styled.div`
   color: #053b4b;
-  font-size: 2rem;
   font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: ${breakpoints.tabletSM}) {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
 
   @media (min-width: ${breakpoints.desktopXL}) {
-    margin: 0 auto;
     padding: 30px 0 0;
   }
 `;
