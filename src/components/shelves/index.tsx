@@ -68,12 +68,12 @@ const Shelves: React.FC = () => {
 
   // todo adicionar destaque. como? mistério....
   return (
-    <S.Container>
-      {renderShelf("Destaque", shelves.action)}
+    <S.ShelfContainer>
+      {renderShelf("Destaques", shelves.fiction)}
       {renderShelf("Ação", shelves.action)}
       {renderShelf("Aventura", shelves.adventure)}
       {renderShelf("Ficção", shelves.fiction)}
-    </S.Container>
+    </S.ShelfContainer>
   );
 };
 
