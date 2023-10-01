@@ -1,10 +1,17 @@
 import styled from "styled-components";
-import { ReactComponent as SearchIcon } from "@/assets/search-icon.svg";
+
 import { breakpoints } from "@/constants";
 
 export const SearchContainer = styled.form`
   position: relative;
   width: 100%;
+
+  svg {
+    position: absolute;
+    right: 1.5rem;
+    margin: auto 0;
+    height: 100%;
+  }
 `;
 
 export const InputSearch = styled.input`
@@ -28,13 +35,6 @@ export const InputSearch = styled.input`
     color: #406a76;
     opacity: 0;
   }
-`;
-
-export const Icon = styled(SearchIcon)`
-  position: absolute;
-  right: 1.5rem;
-  margin: auto 0;
-  height: 100%;
 `;
 
 export const ListContainer = styled.ul`

@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { useHistory } from "react-router-dom";
 
+import { ReactComponent as SearchIcon } from "@/assets/search-icon.svg";
+
 import useStore from "@/store";
 import { getVolumes } from "@/api";
 
@@ -97,7 +99,7 @@ const Search: React.FC = () => {
         onBlur={() => setShowSuggestions(false)}
         placeholder="Pesquisar..."
       />
-      <S.Icon />
+      <SearchIcon title="Pesquisar" aria-label="Pesquisar" />
       {showSuggestions && renderSuggestions}
     </S.SearchContainer>
   );
