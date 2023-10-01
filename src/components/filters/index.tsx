@@ -1,14 +1,21 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { SidePane } from "react-side-pane";
 
 import useStore from "@/store";
 import { Format } from "@/types";
 
 import filtersWithInitialState from "./constants";
 import * as S from "./styles";
-import { SidePane } from "react-side-pane";
 
 const Filter: React.FC = () => {
   const [visible, setVisible] = useState(false);
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth > 768);
+    setVisible(false);
+  };
 
   const { priceLabels, formatLabels, availableLabels } =
     filtersWithInitialState;
@@ -82,7 +89,7 @@ const Filter: React.FC = () => {
   );
 
   const renderFilterWrapper = (Component: JSX.Element): JSX.Element => {
-    if (window.innerWidth > 768) {
+    if (isDesktop) {
       return Component;
     }
 
@@ -92,6 +99,10 @@ const Filter: React.FC = () => {
       </SidePane>
     );
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>

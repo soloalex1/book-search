@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const ButtonContainer = styled.div`
   justify-self: flex-end;
+  grid-row-start: 1;
   margin: 0.5rem 1rem;
 
   @media (min-width: ${breakpoints.desktopMD}) {
