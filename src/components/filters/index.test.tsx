@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 
 import Filters from ".";
 
@@ -58,7 +58,6 @@ describe("components/Filters", () => {
 
   test("it should be hidden on tablet or mobile", () => {
     global.innerWidth = 700;
-
     render(<Filters />);
 
     const filtersButton = screen.getByText(/filtros/i);
@@ -67,5 +66,34 @@ describe("components/Filters", () => {
 
     const filterTitle = screen.queryByText(/filtrar resultados/i);
     expect(filterTitle).toBeNull();
+  });
+
+  test("it should slide to screen when filters button clicked, on tablet or mobile", () => {
+    global.innerWidth = 700;
+    render(<Filters />);
+
+    const filtersButton = screen.getByText(/filtros/i);
+    fireEvent.click(filtersButton);
+
+    const filterTitle = screen.getByText(/filtrar resultados/i);
+    expect(filterTitle).toBeVisible();
+  });
+
+  test("it should hide on blur, on tablet or mobile", async () => {
+    global.innerWidth = 700;
+    render(<Filters />);
+
+    const filtersButton = screen.getByText(/filtros/i);
+    fireEvent.click(filtersButton);
+
+    const filterTitle = screen.getByText(/filtrar resultados/i);
+    expect(filterTitle).toBeVisible();
+
+    const sidePane = screen.getByLabelText(/side pane/i);
+    const backdrop = screen.getByLabelText(/backdrop/i);
+    fireEvent.click(backdrop);
+
+    await waitFor(() => expect(sidePane).not.toBeVisible(), { timeout: 500 });
+    await waitFor(() => expect(backdrop).not.toBeVisible(), { timeout: 500 });
   });
 });
