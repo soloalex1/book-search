@@ -70,15 +70,19 @@ export const FilterLabel = styled.p`
 export const FilterContent = styled.summary`
   margin: 0 0.5rem;
 
-  > ul {
+  ul {
     list-style-type: none;
     padding: 0;
     margin: 0 0 0.25rem 0;
 
-    > li {
+    li {
       margin-bottom: 0.25rem;
 
-      > span {
+      input {
+        margin-right: 0.5rem;
+      }
+
+      label {
         color: #666;
       }
     }

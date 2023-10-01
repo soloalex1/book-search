@@ -54,16 +54,17 @@ const Filter: React.FC = () => {
   const renderPriceFilters = (
     <S.FilterContent>
       <ul>
-        {priceLabels.items.map(({ id, label }) => (
+        {priceLabels.items.map(({ id, label }, index) => (
           <li key={id}>
             <input
               name="price"
+              id={`price-${index}`}
               type="radio"
               checked={id === price?.id}
               onChange={onChangePriceFilter}
               value={id}
             />
-            <span>{label}</span>
+            <label htmlFor={`price-${index}`}>{label}</label>
           </li>
         ))}
       </ul>
@@ -77,11 +78,12 @@ const Filter: React.FC = () => {
           <li key={index}>
             <input
               name={slug}
+              id={slug}
               type="checkbox"
               checked={availableFormats[slug as keyof Format]}
               onChange={onChangeFormatFilter}
             />
-            <span>{label}</span>
+            <label htmlFor={slug}>{label}</label>
           </li>
         ))}
       </ul>
@@ -129,17 +131,21 @@ const Filter: React.FC = () => {
 
           <S.FilterLabel>{availableLabels.title}</S.FilterLabel>
           <S.FilterContent>
-            <input
-              type="checkbox"
-              id="availableItems"
-              name="availableItems"
-              checked={availableItems}
-              onChange={onChangeAvailabilityFilter}
-            />
+            <ul>
+              <li>
+                <input
+                  type="checkbox"
+                  id="availableItems"
+                  name="availableItems"
+                  checked={availableItems}
+                  onChange={onChangeAvailabilityFilter}
+                />
 
-            <label htmlFor="availableItems">
-              {availableLabels.description}
-            </label>
+                <label htmlFor="availableItems">
+                  {availableLabels.description}
+                </label>
+              </li>
+            </ul>
           </S.FilterContent>
           <S.Separator />
         </S.FiltersContainer>
