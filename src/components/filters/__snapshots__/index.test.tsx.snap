@@ -1,0 +1,168 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`components/Filters > it should render the component correctly 1`] = `
+<div>
+  <div
+    class="sc-bczSft ugEpJ"
+  >
+    <button>
+      <svg
+        fill="none"
+        height="800px"
+        viewBox="0 0 24 24"
+        width="800px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"
+          fill="#000000"
+          fill-rule="evenodd"
+        />
+      </svg>
+      <span>
+        Filtros
+      </span>
+    </button>
+  </div>
+  <aside
+    class="sc-gsnScm bluwkX"
+  >
+    <h4
+      class="sc-dkzCjb iBjEaO"
+    >
+      Filtrar resultados
+    </h4>
+    <p
+      class="sc-eCYdKt hXGYLS"
+    >
+      Preço
+    </p>
+    <summary
+      class="sc-jSMdHm faYigA"
+    >
+      <ul>
+        <li>
+          <input
+            id="price-0"
+            name="price"
+            type="radio"
+            value="1"
+          />
+          <label
+            for="price-0"
+          >
+            de R$0 até R$30
+          </label>
+        </li>
+        <li>
+          <input
+            id="price-1"
+            name="price"
+            type="radio"
+            value="2"
+          />
+          <label
+            for="price-1"
+          >
+            de R$31 até R$50
+          </label>
+        </li>
+        <li>
+          <input
+            id="price-2"
+            name="price"
+            type="radio"
+            value="3"
+          />
+          <label
+            for="price-2"
+          >
+            de R$51 até R$100
+          </label>
+        </li>
+        <li>
+          <input
+            id="price-3"
+            name="price"
+            type="radio"
+            value="4"
+          />
+          <label
+            for="price-3"
+          >
+            Mais de R$100
+          </label>
+        </li>
+      </ul>
+    </summary>
+    <div
+      class="sc-gKXNOb iNEEyO"
+    />
+    <p
+      class="sc-eCYdKt hXGYLS"
+    >
+      Formatos disponíveis
+    </p>
+    <summary
+      class="sc-jSMdHm faYigA"
+    >
+      <ul>
+        <li>
+          <input
+            id="pdf"
+            name="pdf"
+            type="checkbox"
+          />
+          <label
+            for="pdf"
+          >
+            PDF
+          </label>
+        </li>
+        <li>
+          <input
+            id="epub"
+            name="epub"
+            type="checkbox"
+          />
+          <label
+            for="epub"
+          >
+            ePUB
+          </label>
+        </li>
+      </ul>
+    </summary>
+    <div
+      class="sc-gKXNOb iNEEyO"
+    />
+    <p
+      class="sc-eCYdKt hXGYLS"
+    >
+      Disponibilidade
+    </p>
+    <summary
+      class="sc-jSMdHm faYigA"
+    >
+      <ul>
+        <li>
+          <input
+            id="availableItems"
+            name="availableItems"
+            type="checkbox"
+          />
+          <label
+            for="availableItems"
+          >
+            Somente volumes disponíveis
+          </label>
+        </li>
+      </ul>
+    </summary>
+    <div
+      class="sc-gKXNOb iNEEyO"
+    />
+  </aside>
+</div>
+`;
