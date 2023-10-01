@@ -1,18 +1,18 @@
 import * as zustand from "zustand";
 import { act } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
 
 const { create: actualCreate, createStore: actualCreateStore } =
-  jest.requireActual<typeof zustand>("zustand");
+  await vi.importActual<typeof zustand>("zustand");
 
-export const storeResetFunctions = new Set<() => void>();
+export const storeResetFns = new Set<() => void>();
 
-// when creating a store, we get its initial state, create a reset function and add it in the set
 export const create = (<T>() => {
   return (stateCreator: zustand.StateCreator<T>) => {
     const store = actualCreate(stateCreator);
     const initialState = store.getState();
 
-    storeResetFunctions.add(() => {
+    storeResetFns.add(() => {
       store.setState(initialState, true);
     });
 
@@ -24,7 +24,7 @@ export const createStore = (<T>(stateCreator: zustand.StateCreator<T>) => {
   const store = actualCreateStore(stateCreator);
   const initialState = store.getState();
 
-  storeResetFunctions.add(() => {
+  storeResetFns.add(() => {
     store.setState(initialState, true);
   });
 
@@ -33,7 +33,7 @@ export const createStore = (<T>(stateCreator: zustand.StateCreator<T>) => {
 
 afterEach(() => {
   act(() => {
-    storeResetFunctions.forEach((resetFn) => {
+    storeResetFns.forEach((resetFn) => {
       resetFn();
     });
   });

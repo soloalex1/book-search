@@ -56,7 +56,7 @@ const Search: React.FC = () => {
   };
 
   const renderSuggestions = suggestions.length ? (
-    <S.ListContainer>
+    <S.ListContainer aria-label="Sugestões de pesquisa">
       {suggestions?.map(({ id, volumeInfo }) => (
         <li key={id}>{volumeInfo.title}</li>
       ))}
