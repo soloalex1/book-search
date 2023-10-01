@@ -7,6 +7,10 @@ export const SearchContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
 
+  .infinite-scroll-component {
+    overflow: initial !important;
+  }
+
   @media (min-width: ${breakpoints.desktopMD}) {
     grid-template-columns: 6fr 2fr;
   }

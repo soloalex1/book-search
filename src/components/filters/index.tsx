@@ -10,7 +10,7 @@ import * as S from "./styles";
 const Filter: React.FC = () => {
   const [visible, setVisible] = useState(false);
 
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
 
   const handleResize = () => {
     setIsDesktop(window.innerWidth > 768);
