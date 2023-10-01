@@ -40,7 +40,9 @@ const Search: React.FC = () => {
       setVolumes(data, true);
     }
 
-    history.push("/search");
+    if (history.location.pathname !== "search") {
+      history.push("/search");
+    }
   };
 
   const handleSuggestionSearch = useCallback((term: string) => {
