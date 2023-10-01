@@ -5,6 +5,12 @@ import { breakpoints } from "@/constants";
 export const Container = styled.div`
   background-color: #45d0c1;
   padding: 1rem;
+
+  @media (min-width: ${breakpoints.tabletSM}) {
+    position: sticky;
+    top: 0;
+    width: 100%;
+  }
 `;
 
 export const Content = styled.div`

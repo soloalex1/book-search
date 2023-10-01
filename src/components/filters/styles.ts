@@ -15,10 +15,12 @@ export const FiltersContainer = styled.aside`
   background-color: #fff;
   padding: 1rem;
   color: #222;
+  text-align: left;
 
   @media (min-width: ${breakpoints.desktopMD}) {
     width: initial;
-    position: static;
+    position: fixed;
+    right: 0;
     display: block;
     padding: 0;
     margin: 0 auto;
