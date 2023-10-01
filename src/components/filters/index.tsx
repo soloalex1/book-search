@@ -1,6 +1,8 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { SidePane } from "react-side-pane";
 
+import { ReactComponent as FilterIcon } from "@/assets/filter-icon.svg";
+
 import useStore from "@/store";
 import { Format } from "@/types";
 
@@ -109,15 +111,14 @@ const Filter: React.FC = () => {
   return (
     <>
       <S.ButtonContainer>
-        <S.Button onClick={() => setVisible(true)}>Filtrar resultados</S.Button>
+        <button onClick={() => setVisible(true)}>
+          <FilterIcon />
+          <span>Filtros</span>
+        </button>
       </S.ButtonContainer>
       {renderFilterWrapper(
         <S.FiltersContainer>
           <S.ContentTitle>Filtrar resultados</S.ContentTitle>
-
-          {!areFiltersEmpty() && (
-            <S.Button onClick={resetFilters}>Limpar Filtros</S.Button>
-          )}
 
           <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
           {renderPriceFilters}
@@ -148,6 +149,10 @@ const Filter: React.FC = () => {
             </ul>
           </S.FilterContent>
           <S.Separator />
+
+          {!areFiltersEmpty() && (
+            <S.ResetButton onClick={resetFilters}>Limpar filtros</S.ResetButton>
+          )}
         </S.FiltersContainer>
       )}
     </>

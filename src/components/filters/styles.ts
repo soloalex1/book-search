@@ -6,6 +6,39 @@ export const ButtonContainer = styled.div`
   grid-row-start: 1;
   margin: 0.5rem 1rem;
 
+  @media (min-width: ${breakpoints.tabletSM}) {
+    margin: 0.5rem 2rem;
+  }
+
+  button {
+    height: 40px;
+    display: flex;
+    gap: 0.25rem;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #fff;
+    border: 1px solid #45d0c1;
+    color: #45d0c1;
+    padding: 0.6rem;
+    font-weight: 400;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+
+    svg {
+      height: 100%;
+      width: fit-content;
+
+      path {
+        fill: #45d0c1;
+      }
+    }
+
+    span {
+      font-weight: 700;
+    }
+  }
+
   @media (min-width: ${breakpoints.desktopMD}) {
     display: none;
   }
@@ -40,23 +73,24 @@ export const ContentTitle = styled.h4`
   }
 `;
 
-export const Button = styled.button`
+export const ResetButton = styled.button`
   width: fit-content;
   height: 2.5rem;
-  border: 1px solid transparent;
+  border: 1px solid #45d0c1;
   padding: 0.6rem 1.2rem;
-  text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  background-color: #45d0c1;
-  color: white;
-  transition: all 0.5s linear;
+  background-color: #fff;
+  color: #45d0c1;
+  transition: 0.8s;
+  width: 100%;
 
   &:hover {
-    border-color: transparent;
-    background-color: #37a69a;
+    border: 1px solid #45d0c180;
+    background-color: #45d0c180;
+    color: #fff;
   }
 `;
 
