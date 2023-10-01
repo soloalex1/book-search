@@ -109,8 +109,12 @@ const Filter: React.FC = () => {
           <S.FilterLabel>{priceLabels.title}</S.FilterLabel>
           {renderPriceFilters}
 
+          <S.Separator />
+
           <S.FilterLabel>{formatLabels.title}</S.FilterLabel>
           {renderFormatFilters}
+
+          <S.Separator />
 
           <S.FilterLabel>{availableLabels.title}</S.FilterLabel>
           <S.FilterContent>
@@ -126,6 +130,7 @@ const Filter: React.FC = () => {
               {availableLabels.description}
             </label>
           </S.FilterContent>
+          <S.Separator />
         </S.FiltersContainer>
       )}
     </>
