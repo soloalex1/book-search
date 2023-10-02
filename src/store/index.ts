@@ -124,10 +124,7 @@ const useStore = create<BookStore>()(
           set((state) => ({
             filters: {
               ...state.filters,
-              price: {
-                ...state.filters.price,
-                ...price,
-              },
+              price,
             },
           })),
 

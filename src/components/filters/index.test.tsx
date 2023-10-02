@@ -1,9 +1,26 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { screen, render, fireEvent, waitFor } from "@testing-library/react";
+import { renderHook, cleanup } from "@testing-library/react-hooks";
+
+import useStore from "@/store";
 
 import Filters from ".";
 
 describe("components/Filters", () => {
+  const store = useStore.getState();
+
+  const priceSpy = vi.spyOn(store, "setPriceFilters");
+  const formatSpy = vi.spyOn(store, "setFormatFilters");
+  const availabilitySpy = vi.spyOn(store, "setAvailabilityFilters");
+
+  beforeEach(() => {});
+
+  afterEach(() => {
+    cleanup();
+    vi.clearAllMocks();
+    global.innerWidth = 1408;
+  });
+
   test("it should render the component correctly", () => {
     const { container } = render(<Filters />);
 
@@ -95,5 +112,47 @@ describe("components/Filters", () => {
 
     await waitFor(() => expect(sidePane).not.toBeVisible(), { timeout: 500 });
     await waitFor(() => expect(backdrop).not.toBeVisible(), { timeout: 500 });
+  });
+
+  test("it should apply and clear filters on store", () => {
+    const { result } = renderHook(() => useStore());
+
+    render(<Filters />);
+
+    const priceLowInput = screen.getByLabelText(/de R\$0 até R\$30/i);
+    fireEvent.click(priceLowInput);
+
+    expect(priceSpy).toHaveBeenCalledOnce();
+    expect(result.current.filters.price.min).toBeUndefined();
+    expect(result.current.filters.price.max).toStrictEqual(30);
+
+    const priceHighInput = screen.getByLabelText(/mais de R\$100/i);
+    fireEvent.click(priceHighInput);
+
+    expect(priceSpy).toHaveBeenCalledTimes(2);
+    expect(result.current.filters.price.min).toStrictEqual(100);
+    expect(result.current.filters.price.max).toBeUndefined();
+
+    const pdfInput = screen.getByLabelText(/pdf/i);
+    fireEvent.click(pdfInput);
+
+    expect(formatSpy).toHaveBeenCalledOnce();
+    expect(result.current.filters.availableFormats.pdf).toStrictEqual(true);
+    expect(result.current.filters.availableFormats.epub).toStrictEqual(false);
+
+    const availabilityInput = screen.getByLabelText(/volumes disponíveis/i);
+    fireEvent.click(availabilityInput);
+
+    expect(availabilitySpy).toHaveBeenCalledOnce();
+    expect(result.current.filters.availableItems).toStrictEqual(true);
+
+    const clearButton = screen.getByText(/limpar filtros/i);
+    fireEvent.click(clearButton);
+
+    expect(result.current.filters.price.min).toBeUndefined();
+    expect(result.current.filters.price.max).toBeUndefined();
+    expect(result.current.filters.availableFormats.pdf).toStrictEqual(false);
+    expect(result.current.filters.availableFormats.epub).toStrictEqual(false);
+    expect(result.current.filters.availableItems).toStrictEqual(false);
   });
 });

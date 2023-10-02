@@ -10,12 +10,12 @@ import { renderHook, cleanup } from "@testing-library/react-hooks";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import Search from ".";
-
 import useStore from "@/store";
 import * as api from "@/api";
 
 import { queryMocks, volumeMocks } from "@/store/_mocks";
+
+import Search from ".";
 
 describe("components/Search", () => {
   const store = useStore.getState();
