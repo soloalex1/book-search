@@ -13,7 +13,6 @@ import {
 
 type BookStore = {
   query: string;
-  isLoading: boolean;
   volumes: VolumeQuery;
   suggestions: VolumeData[];
   pagination: {
@@ -29,7 +28,6 @@ type BookStore = {
   };
 
   setQuery(query: string): void;
-  setLoading(isLoading: boolean): void;
   setVolumes(volumes: VolumeQuery, resetPage?: boolean): void;
   getFilteredVolumes(filters: (item: VolumeData) => boolean): VolumeData[];
   setSuggestions(suggestions: VolumeData[]): void;
@@ -47,7 +45,6 @@ type BookStore = {
 
 const initialState = {
   query: "",
-  isLoading: false,
   volumes: {
     totalItems: 0,
     items: [],
@@ -80,8 +77,6 @@ const useStore = create<BookStore>()(
         ...initialState,
 
         setQuery: (query) => set(() => ({ query })),
-
-        setLoading: (isLoading) => set(() => ({ isLoading })),
 
         setVolumes: (volumes, resetPage = false) =>
           set((state) => ({

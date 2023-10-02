@@ -21,7 +21,6 @@ const Search: React.FC = () => {
     filters,
     getFilteredVolumes,
     setSuggestions,
-    setLoading,
     hasPriceFilter,
     hasFormatFilter,
     pagination: { currentPage, itemsPerPage },
@@ -59,7 +58,6 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     setSuggestions([]);
-    setLoading(true);
   }, []);
 
   const filterHelper = (item: VolumeData) => {
