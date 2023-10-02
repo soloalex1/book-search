@@ -71,6 +71,7 @@ const Search: React.FC = () => {
 
         if (items) {
           setSuggestions(items);
+          console.log(items);
           return;
         }
       }
@@ -88,7 +89,7 @@ const Search: React.FC = () => {
   }, [searchRef]);
 
   return (
-    <S.SearchContainer onSubmit={handleSearch}>
+    <S.SearchContainer onSubmit={handleSearch} role="search">
       <S.InputSearch
         ref={searchRef}
         name="search"

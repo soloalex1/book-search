@@ -4,6 +4,7 @@ exports[`components/Search > should render the component correctly 1`] = `
 <div>
   <form
     class="sc-bczSft emRDFI"
+    role="search"
   >
     <input
       class="sc-gsnScm bqNyGc"
