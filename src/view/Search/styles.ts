@@ -62,3 +62,7 @@ export const VolumeAuthor = styled.label`
   font-size: 0.75rem;
   color: #9eaeb7;
 `;
+
+export const EmptyState = styled.p`
+  text-align: center;
+`;

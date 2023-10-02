@@ -97,9 +97,10 @@ const Search: React.FC = () => {
     <S.SearchContainer>
       <InfiniteScroll
         dataLength={volumes.totalItems}
-        loader={<Spinner />}
+        loader={<S.EmptyState>Nenhum resultado encontrado.</S.EmptyState>}
         next={getMoreVolumes}
         hasMore={hasMoreElements}
+        scrollThreshold={0.6}
       >
         {
           <S.ResultsContainer>
