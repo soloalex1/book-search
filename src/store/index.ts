@@ -165,7 +165,11 @@ const useStore = create<BookStore>()(
       {
         name: "booksStore",
         storage: createJSONStorage(() => localStorage),
-        partialize: (state) => ({ query: state.query, shelves: state.shelves }),
+        partialize: (state) => ({
+          query: state.query,
+          shelves: state.shelves,
+          volumes: state.volumes,
+        }),
       }
     )
   )
