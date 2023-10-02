@@ -71,7 +71,6 @@ const Search: React.FC = () => {
 
         if (items) {
           setSuggestions(items);
-          console.log(items);
           return;
         }
       }
