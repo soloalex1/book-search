@@ -22,6 +22,16 @@ const Shelves: React.FC = () => {
     return await getSubjects(CATEGORIES);
   }, []);
 
+  const fetchShelves = useCallback(async () => {
+    const data = await handleSearch();
+
+    if (data) {
+      data.forEach(({ subject, items }) => {
+        setShelf(subject as ShelfKey, items);
+      });
+    }
+  }, []);
+
   const renderVolumeImage = (volume: VolumeInfo) => {
     if (!volume.imageLinks) return VolumeImageFallback;
 
@@ -57,14 +67,13 @@ const Shelves: React.FC = () => {
   };
 
   useEffect(() => {
-    handleSearch().then((data) => {
-      data.forEach(({ subject, items }) => {
-        setShelf(subject as ShelfKey, items);
-      });
-    });
+    const { action, adventure, fiction } = shelves;
+
+    if (!action.length && !adventure.length && !fiction.length) {
+      fetchShelves();
+    }
   }, []);
 
-  // todo adicionar destaque. como? mistério....
   return (
     <S.ShelfContainer>
       {renderShelf("Destaques", shelves.fiction)}
