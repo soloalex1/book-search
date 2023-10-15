@@ -1,6 +1,6 @@
 import React from "react";
 
-import Search from "@/components/search";
+import Search from "@/components/Search";
 
 import * as S from "./styles";
 
@@ -12,7 +12,8 @@ const Header: React.FC = () => {
           <a href="/">
             <img
               src="https://s3-sa-east-1.amazonaws.com/files.arvoredelivros.com.br/arvore-library-assets/images/logos/logo-livros-horizontal-white.svg"
-              alt="Arvore Livros"
+              alt="Book Search"
+              aria-label="Book Search logo"
               width="168"
               height="25"
             />

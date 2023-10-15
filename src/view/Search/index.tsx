@@ -3,8 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import VolumeImageFallback from "@/assets/capa-fallback.svg";
 
-import Filters from "@/components/filters";
-import Spinner from "@/components/spinner";
+import Filters from "@/components/Filters";
 
 import { inPrice, isAvailable, isForSale } from "@/utils";
 import { getVolumes } from "@/api";
