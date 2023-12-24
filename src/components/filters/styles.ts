@@ -76,20 +76,20 @@ export const ContentTitle = styled.h4`
 export const ResetButton = styled.button`
   width: fit-content;
   height: 2.5rem;
-  border: 1px solid #45d0c1;
+  border: 1px solid #4361EE;
   padding: 0.6rem 1.2rem;
   font-weight: 400;
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
   background-color: #fff;
-  color: #45d0c1;
+  color: #4361EE;
   transition: 0.8s;
   width: 100%;
 
   &:hover {
-    border: 1px solid #45d0c180;
-    background-color: #45d0c180;
+    border: 1px solid #4361EE;
+    background-color: #4361EE;
     color: #fff;
   }
 `;

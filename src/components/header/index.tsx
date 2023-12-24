@@ -16,9 +16,6 @@ const Header: React.FC = () => {
         <S.ContentSearch>
           <Search />
         </S.ContentSearch>
-        <S.ContentUser>
-          <p>login</p>
-        </S.ContentUser>
       </S.Content>
     </S.Container>
   );
