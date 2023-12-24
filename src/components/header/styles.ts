@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { breakpoints } from "@/constants";
 
 export const Container = styled.div`
-  background-color: #45d0c1;
+  background-color: #4361EE;
   padding: 1rem;
 
   @media (min-width: ${breakpoints.tabletSM}) {
@@ -24,6 +24,17 @@ export const Content = styled.div`
 export const LogoContainer = styled.div`
   align-self: center;
   flex-grow: 1;
+
+  a {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFF;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const ContentSearch = styled.div`

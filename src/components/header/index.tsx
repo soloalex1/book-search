@@ -10,13 +10,7 @@ const Header: React.FC = () => {
       <S.Content>
         <S.LogoContainer>
           <a href="/">
-            <img
-              src="https://s3-sa-east-1.amazonaws.com/files.arvoredelivros.com.br/arvore-library-assets/images/logos/logo-livros-horizontal-white.svg"
-              alt="Book Search"
-              aria-label="Book Search logo"
-              width="168"
-              height="25"
-            />
+            Book Search Demo
           </a>
         </S.LogoContainer>
         <S.ContentSearch>

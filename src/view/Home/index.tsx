@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 
-import VolumeImageFallback from "@/assets/capa-fallback.svg";
+import VolumeImageFallback from "@/assets/cover.svg";
 
 import { settings } from "@/components/Carousel/constants";
 import Carousel from "@/components/Carousel";

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import VolumeImageFallback from "@/assets/capa-fallback.svg";
+import VolumeImageFallback from "@/assets/cover.svg";
 
 import Filters from "@/components/Filters";
 
